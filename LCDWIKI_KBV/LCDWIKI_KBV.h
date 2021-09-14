@@ -62,6 +62,7 @@ typedef struct _lcd_info
 class LCDWIKI_KBV:public LCDWIKI_GUI
 {
 	public:
+    //LCDWIKI_KBV(); // Warning!!! Do not use this constructor
 	LCDWIKI_KBV(uint16_t model,uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t reset);
 	LCDWIKI_KBV(int16_t wid,int16_t heg,uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t reset);
 	void Init_LCD(void);
