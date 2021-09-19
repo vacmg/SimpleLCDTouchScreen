@@ -28,7 +28,7 @@ public:
 
     uint16_t to565()
     {
-        return 0; //TODO do this function
+        return (((r & 0xf8)<<8) + ((g & 0xfc)<<3)+(b>>3));
     }
 };
 
