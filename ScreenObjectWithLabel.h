@@ -4,11 +4,11 @@
 
 #ifndef SIMPLELCDTOUCHSCREEN_SCREENOBJECTWITHLABEL_H
 #define SIMPLELCDTOUCHSCREEN_SCREENOBJECTWITHLABEL_H
-#include "ScreenObject.h"
+#include "ScreenObjectWithXtraCoords.h"
 #include "Label.h"
 
 
-class ScreenObjectWithLabel: virtual public ScreenObject
+class ScreenObjectWithLabel: virtual public ScreenObjectWithXtraCoords
 {
 public:
     ScreenObjectWithLabel(int x, int y, Color mainColor, Label label);
@@ -17,10 +17,16 @@ public:
     bool isAValidLabel();
     Label getLabel();
     void setLabel(Label label);
+    void updateLabelLocation(uint8_t margin);
+    int getMargin();
+    void setMargin(int margin);
 private:
-    //void updateLabelLocation();
+    static const uint8_t blockSizeX = 5;
+    static const uint8_t blockSizeY = 7;
     Label label;
     bool validLabel;
+    int margin;
+    static const int defaultMargin = 8;
 };
 
 

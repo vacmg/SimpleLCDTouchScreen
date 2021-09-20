@@ -49,4 +49,3 @@ void ScreenObject::setMainColor(uint8_t r, uint8_t g, uint8_t b)
     this->mainColor = Color(r, g, b);
 }
 
-

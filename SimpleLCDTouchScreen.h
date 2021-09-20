@@ -20,8 +20,9 @@ public:
     {
 
     }
-    void show(Line line);
-    void show(Label);
+    void draw(Line line);
+    void draw(Label label);
+    void draw(Rectangle rectangle);
 
 
 private:

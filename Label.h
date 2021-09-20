@@ -20,7 +20,7 @@ public:
 
 private:
     char* string;
-    int fontSize; // size of each square that compounds any symbol
+    int fontSize; // length of each square that compounds any symbol in px
 };
 
 

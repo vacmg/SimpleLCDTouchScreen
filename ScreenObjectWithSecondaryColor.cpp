@@ -41,3 +41,4 @@ void ScreenObjectWithSecondaryColor::setSecondaryColor(uint8_t r, uint8_t g, uin
 {
     this->secondaryColor = Color(r, g, b);
 }
+

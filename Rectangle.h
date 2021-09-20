@@ -8,16 +8,17 @@
 #include "ScreenObjectWithLabel.h"
 #include "ScreenObjectWithXtraCoords.h"
 
-class Rectangle: public ScreenObjectWithSecondaryColor, public ScreenObjectWithLabel, public ScreenObjectWithXtraCoords
+class Rectangle: public ScreenObjectWithSecondaryColor, public ScreenObjectWithLabel
 {
 public:
     Rectangle(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, Label label);
     Rectangle(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor);
     Rectangle(int x, int y, int x1, int y1, Color mainColor, Label label);
     Rectangle(int x, int y, int x1, int y1, Color mainColor);
-
+    void setCoords(int x, int y);
+    void setCoords1(int x, int y);
 private:
-    void updateLabelLocation();
+    const int rectangleMargin = 32;
 };
 
 
