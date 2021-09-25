@@ -1,6 +1,16 @@
 #include "SimpleLCDTouchScreen.h"
 #include "ScreenObject.h"
 
+SimpleLCDTouchScreen::SimpleLCDTouchScreen(int16_t wid, int16_t heg, uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t reset) : LCDWIKI_KBV(wid, heg, cs, cd, wr, rd, reset)
+{
+
+}
+
+SimpleLCDTouchScreen::SimpleLCDTouchScreen(uint16_t model1, uint8_t cs1, uint8_t cd1, uint8_t wr1, uint8_t rd1,uint8_t reset1) : LCDWIKI_KBV(model1, cs1, cd1, wr1, rd1, reset1)
+{
+
+}
+
 void SimpleLCDTouchScreen::draw(Line line)
 {
     this->Set_Draw_color(line.getMainColor().to565());
@@ -25,6 +35,7 @@ void SimpleLCDTouchScreen::draw(Label label)
 
 void SimpleLCDTouchScreen::draw(Rectangle rectangle)
 {
+    Serial.println();
     if(rectangle.isAValidSecondaryColor())
     {
         this->Set_Draw_color(rectangle.getSecondaryColor().to565());
@@ -38,3 +49,4 @@ void SimpleLCDTouchScreen::draw(Rectangle rectangle)
         draw(rectangle.getLabel());
     }
 }
+

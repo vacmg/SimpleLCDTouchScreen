@@ -7,25 +7,40 @@
 #include "Color.h"
 
 SimpleLCDTouchScreen my_lcd(ST7796S, A3, A2, A1, A0, A4); //model,cs,cd,wr,rd,reset
+TouchScreenObject ts(8,A3,A2,9,300,320,480,3,924,111,58,935); // rx is the resistance between X+ and X- Use any multimeter to read it or leave it blanc
+//TouchScreenObject ts(8,A3,A2,9,300,480,320,0,0,0,1023,1023); // rx is the resistance between X+ and X- Use any multimeter to read it or leave it blanc
+
 Line line(93,68,93,68+2*8-2, Color(0,255,0));
 Line line2(93,68+2*8-2,93+2*6-2,68+2*8-2, Color(255,0,0));
 Label label(60,60,"Patata", 8,Color(255,255,255));
-Label label2(60,200,"Cocida", 8,Color(255,255,255), Color(100,100,100));
+Label label2(60,200,"45", 8,Color(255,255,255), Color(100,100,100));
 Rectangle rectangle(50,50,400,200,Color(0,255,255),Color(255,200,0),label);
-Rectangle rectangle2(410,30,470,300,Color(0,255,255),Color(255,200,0),label);
+Rectangle rectangle2(410,30,470,300,Color(0,255,255),Color(255,200,0),label2);
+RectangleButton rectangleBtn(100,50,400,200,Color(0,255,255),Color(255,200,0),label, ts);
+
+
 
 void setup() {
   Serial.begin(9600);
   delay(100);
+
   //Serial.println(freeMemory());
     my_lcd.Init_LCD();
     my_lcd.Set_Rotation(3);
     my_lcd.Fill_Screen(0);
     //my_lcd.Fill_Screen(Color(255,0,0).to565());
+    //rectangleBtn
 
-    
-    my_lcd.draw(rectangle);
-    my_lcd.draw(rectangle2);
+    Serial.println(rectangleBtn.getx());
+    Serial.println(rectangleBtn.gety());
+    Serial.println(rectangleBtn.isAValidLabel());
+    Serial.println(rectangleBtn.getMainColor().to565(),HEX);
+
+    Serial.println('\n');
+
+    //my_lcd.draw(rectangle);
+    //my_lcd.draw(rectangle2);
+    my_lcd.draw(rectangleBtn);
 
     //my_lcd.show(line);
     //my_lcd.show(line2);
@@ -39,8 +54,11 @@ void loop()
     my_lcd.show(rectangle);
     Serial.println(freeMemory());
     Serial.println(i);
-    i++;
-    //delay(1000);*/
+    i++;*/
+    delay(10);
+    //rectangleBtn.isPressed();
+    if(rectangleBtn.isPressed())
+    Serial.println("Boton pulsado");
 }
 
 #ifdef __arm__

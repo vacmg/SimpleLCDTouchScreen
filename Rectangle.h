@@ -8,7 +8,7 @@
 #include "ScreenObjectWithLabel.h"
 #include "ScreenObjectWithXtraCoords.h"
 
-class Rectangle: public ScreenObjectWithSecondaryColor, public ScreenObjectWithLabel
+class Rectangle: virtual public ScreenObjectWithSecondaryColor, virtual public ScreenObjectWithLabel
 {
 public:
     Rectangle(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, Label label);
