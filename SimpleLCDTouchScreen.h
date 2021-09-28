@@ -4,12 +4,12 @@
 #include <LCDWIKI_KBV.h>
 #include <LCDWIKI_GUI.h>
 #include <TouchScreen.h>
-#include "TouchScreenObject.h"
-#include "ScreenObject.h"
-#include "Line.h"
-#include "Label.h"
-#include "Rectangle.h"
-#include "RectangleButton.h"
+#include <TouchScreenObject.h>
+#include <ScreenObject.h>
+#include <Line.h>
+#include <Label.h>
+#include <Rectangle.h>
+#include <RectangleButton.h>
 
 class SimpleLCDTouchScreen: public LCDWIKI_KBV
 {
