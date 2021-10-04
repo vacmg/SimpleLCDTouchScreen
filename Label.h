@@ -4,7 +4,7 @@
 
 #ifndef SIMPLELCDTOUCHSCREEN_LABEL_H
 #define SIMPLELCDTOUCHSCREEN_LABEL_H
-#include <ScreenObjectWithSecondaryColor.h>
+#include "ScreenObjectWithSecondaryColor.h"
 
 
 class Label: public ScreenObjectWithSecondaryColor

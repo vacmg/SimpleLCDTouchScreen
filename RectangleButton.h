@@ -4,9 +4,9 @@
 
 #ifndef SIMPLELCDTOUCHSCREEN_RECTANGLEBUTTON_H
 #define SIMPLELCDTOUCHSCREEN_RECTANGLEBUTTON_H
-#include <ScreenObjectWithTouch.h>
-#include <Label.h>
-#include <Rectangle.h>
+#include "ScreenObjectWithTouch.h"
+#include "Label.h"
+#include "Rectangle.h"
 
 class RectangleButton: virtual public Rectangle, virtual public ScreenObjectWithTouch, virtual public ScreenObjectWithLabel, virtual public ScreenObjectWithSecondaryColor, virtual public ScreenObjectWithXtraCoords, virtual public ScreenObject
 {

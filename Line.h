@@ -4,7 +4,7 @@
 
 #ifndef SIMPLELCDTOUCHSCREEN_LINE_H
 #define SIMPLELCDTOUCHSCREEN_LINE_H
-#include <ScreenObjectWithXtraCoords.h>
+#include "ScreenObjectWithXtraCoords.h"
 
 
 class Line: public ScreenObjectWithXtraCoords

@@ -4,9 +4,9 @@
 
 #ifndef SIMPLELCDTOUCHSCREEN_RECTANGLE_H
 #define SIMPLELCDTOUCHSCREEN_RECTANGLE_H
-#include <ScreenObjectWithSecondaryColor.h>
-#include <ScreenObjectWithLabel.h>
-#include <ScreenObjectWithXtraCoords.h>
+#include "ScreenObjectWithSecondaryColor.h"
+#include "ScreenObjectWithLabel.h"
+#include "ScreenObjectWithXtraCoords.h"
 
 class Rectangle: virtual public ScreenObjectWithSecondaryColor, virtual public ScreenObjectWithLabel
 {
