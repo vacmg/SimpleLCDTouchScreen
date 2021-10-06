@@ -6,7 +6,7 @@ All the different drawable objects like Rectangle, or Line, inherits from a supe
 # Auxiliary Classes
 - Color: It provides a way to easily define a color via an RGB888 or RGB565 standard, and translate from one to another.
 # Functional Classes
-- SimpleLCDTouchScreen: The object that represents the screen, it is in charge of drawing all screenObjects.
+- SimpleLCDTouchScreen: The object that represents the screen, and optionally its SD card. It is in charge of drawing all screenObjects.
 - TouchScreenObject: The basic object that represents the touchscreen module. ScreenObjectWithTouch use it for knowing when it is touched.
 - ScreenObject: The basic object that can be displayed in the screen. it has coordinates and a mainColor.
 - ScreenObjectWithSecondaryColor: Class inherited from ScreenObject, it provides an extra Color property, for objects with more than one color.
@@ -20,6 +20,10 @@ All this classes doesn't have any code but the constructor (with the exception o
 
 - Line: Class inherited from ScreenObjectWithXtraCoords that draws a straight line between 2 points.
 - Label: Class inherited from ScreenObjectWithSecondaryColor which allows printing text with a desired font, text color and a background color.
-- Rectangle: Class inherited from ScreenObjectWithXtraCoords, ScreenObjectWithSecondaryColor and ScreenObjectWithLabel, which draws a rectangle which can have a label inside.
-- RectangleButton: Class inherited from Rectangle and ScreenObjectWithTouch which enables having rectangular button with an optional label inside.
+- Picture: Class inherited from ScreenObjectWithXtraCoords, which allows to show uncompressed bgr BMP images from a SD card reader
+- PictureButton: Class inherited from Picture and ScreenObjectWithTouch which enables having a button with a desired image.
+- Rectangle: Class inherited from ScreenObjectWithXtraCoords, ScreenObjectWithSecondaryColor and ScreenObjectWithLabel, which draws a rectangle that can have a label inside.
+- RectangleButton: Class inherited from Rectangle and ScreenObjectWithTouch which enables having a rectangular button with an optional label inside.
+- RoundRectangle: Class inherited from ScreenObjectWithXtraCoords, ScreenObjectWithSecondaryColor and ScreenObjectWithLabel, which draws a rectangle with rounded edges that can have a label inside.
+- RectangleButton: Class inherited from RoundRectangle and ScreenObjectWithTouch which enables having a rectangular button with rounded edges with an optional label inside.
 - More coming soon...
