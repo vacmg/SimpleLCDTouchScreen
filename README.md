@@ -25,5 +25,5 @@ All this classes doesn't have any code but the constructor (with the exception o
 - Rectangle: Class inherited from ScreenObjectWithXtraCoords, ScreenObjectWithSecondaryColor and ScreenObjectWithLabel, which draws a rectangle that can have a label inside.
 - RectangleButton: Class inherited from Rectangle and ScreenObjectWithTouch which enables having a rectangular button with an optional label inside.
 - RoundRectangle: Class inherited from ScreenObjectWithXtraCoords, ScreenObjectWithSecondaryColor and ScreenObjectWithLabel, which draws a rectangle with rounded edges that can have a label inside.
-- RectangleButton: Class inherited from RoundRectangle and ScreenObjectWithTouch which enables having a rectangular button with rounded edges with an optional label inside.
+- RoundRectangleButton: Class inherited from RoundRectangle and ScreenObjectWithTouch which enables having a rectangular button with rounded edges with an optional label inside.
 - More coming soon...
