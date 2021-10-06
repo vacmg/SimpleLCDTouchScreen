@@ -4,7 +4,7 @@ This library needs LCDWikiGUI, LCDWikiKBV & TouchScreen libraries to work. It is
 # How it works
 All the different drawable objects like Rectangle, or Line, inherits from a super class that has all the functions and attributes it will need: i.e: Line inherits from ScreenObjectWithXtraCoords, because it needs 2 set of coords to draw a line, and all the functionality is inherited from that class.
 # Auxiliary Classes
-- Color: It provides a way to easily define a color via an RGB888 or RGB565 standard, and translate from one to another.
+- Color: It provides a way to easily define a color via an RGB888 or RGB565 standard, and translate from one to the other.
 # Functional Classes
 - SimpleLCDTouchScreen: The object that represents the screen, and optionally its SD card. It is in charge of drawing all screenObjects.
 - TouchScreenObject: The basic object that represents the touchscreen module. ScreenObjectWithTouch use it for knowing when it is touched.
