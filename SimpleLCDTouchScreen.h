@@ -10,6 +10,8 @@
 #include "Label.h"
 #include "Rectangle.h"
 #include "RectangleButton.h"
+#include "RoundRectangle.h"
+#include "RoundRectangleButton.h"
 #include "Picture.h"
 #include "ScreenObjectWithPicture.h"
 #include "PictureButton.h"
@@ -24,6 +26,7 @@ public:
     bool draw(Line line);
     bool draw(Label label);
     bool draw(Rectangle rectangle);
+    bool draw(RoundRectangle roundRectangle);
     bool draw(Picture picture);
 
 private:

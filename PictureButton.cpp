@@ -8,3 +8,8 @@ PictureButton::PictureButton(int x, int y, char *picturePath, TouchScreenObject 
 {
 
 }
+
+bool PictureButton::isPressed()
+{
+    return init() && ScreenObjectWithTouch::isPressed();
+}

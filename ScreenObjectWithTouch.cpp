@@ -16,20 +16,6 @@ bool ScreenObjectWithTouch::isPressed()
 
     if(point.z > 50)
     {
-        /*Serial.print("X: ");
-        Serial.print(getx());
-        Serial.print(", X1: ");
-        Serial.print(getx1());
-        Serial.print(", ");
-        Serial.println(point.x);
-        Serial.print("Y: ");
-        Serial.print(gety());
-        Serial.print(", Y1: ");
-        Serial.print(gety1());
-        Serial.print(", ");
-        Serial.println(point.y);
-        Serial.println();*/
-
         return (point.x > getx() && point.x < getx1() && point.y > gety() && point.y < gety1());
     }
     else return false;

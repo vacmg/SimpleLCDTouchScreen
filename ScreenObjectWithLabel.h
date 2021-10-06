@@ -20,6 +20,8 @@ public:
     void updateLabelLocation(uint8_t margin);
     int getMargin();
     void setMargin(int margin);
+    void setCoords(int x, int y);
+    void setCoords1(int x, int y);
 private:
     static const uint8_t blockSizeX = 5;
     static const uint8_t blockSizeY = 7;

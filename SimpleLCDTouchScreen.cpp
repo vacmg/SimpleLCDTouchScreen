@@ -37,7 +37,6 @@ bool SimpleLCDTouchScreen::draw(Label label)
 
 bool SimpleLCDTouchScreen::draw(Rectangle rectangle)
 {
-    Serial.println();
     if(rectangle.isAValidSecondaryColor())
     {
         this->Set_Draw_color(rectangle.getSecondaryColor().to565());
@@ -49,6 +48,23 @@ bool SimpleLCDTouchScreen::draw(Rectangle rectangle)
     {
         rectangle.updateLabelLocation(rectangle.getMargin());
         draw(rectangle.getLabel());
+    }
+    return true;
+}
+
+bool SimpleLCDTouchScreen::draw(RoundRectangle roundRectangle)
+{
+    if(roundRectangle.isAValidSecondaryColor())
+    {
+        this->Set_Draw_color(roundRectangle.getSecondaryColor().to565());
+        this->Fill_Round_Rectangle(roundRectangle.getx(), roundRectangle.gety(), roundRectangle.getx1(), roundRectangle.gety1(), roundRectangle.getRadius());
+    }
+    this->Set_Draw_color(roundRectangle.getMainColor().to565());
+    this->Draw_Round_Rectangle(roundRectangle.getx(),roundRectangle.gety(),roundRectangle.getx1(),roundRectangle.gety1(),roundRectangle.getRadius());
+    if(roundRectangle.isAValidLabel())
+    {
+        roundRectangle.updateLabelLocation(roundRectangle.getMargin());
+        draw(roundRectangle.getLabel());
     }
     return true;
 }

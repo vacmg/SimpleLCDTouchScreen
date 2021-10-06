@@ -11,6 +11,7 @@ class PictureButton: virtual public Picture, virtual public ScreenObjectWithTouc
 {
 public:
     PictureButton(int x, int y, char *picturePath, TouchScreenObject ts);
+    bool isPressed();
 };
 
 

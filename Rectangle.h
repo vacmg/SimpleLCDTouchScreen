@@ -15,10 +15,8 @@ public:
     Rectangle(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor);
     Rectangle(int x, int y, int x1, int y1, Color mainColor, Label label);
     Rectangle(int x, int y, int x1, int y1, Color mainColor);
-    void setCoords(int x, int y);
-    void setCoords1(int x, int y);
 private:
-    const int rectangleMargin = 32;
+    const int margin = 32;
 };
 
 

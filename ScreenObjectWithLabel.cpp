@@ -84,3 +84,15 @@ void ScreenObjectWithLabel::setMargin(int margin)
 {
     this->margin = margin;
 }
+
+void ScreenObjectWithLabel::setCoords(int x, int y)
+{
+    ScreenObject::setCoords(x, y);
+    updateLabelLocation(margin);
+}
+
+void ScreenObjectWithLabel::setCoords1(int x, int y)
+{
+    ScreenObjectWithXtraCoords::setCoords1(x, y);
+    updateLabelLocation(margin);
+}

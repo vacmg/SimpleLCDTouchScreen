@@ -6,6 +6,8 @@
 #include "SimpleLCDTouchScreen.h"
 #include "Color.h"
 
+//circle, triangle, bitmap?
+
 SimpleLCDTouchScreen my_lcd(ST7796S, A3, A2, A1, A0, A4); //model,cs,cd,wr,rd,reset
 TouchScreenObject ts(8,A3,A2,9,300,320,480,3,924,111,58,935); // rx is the resistance between X+ and X- Use any multimeter to read it or leave it blanc
 //TouchScreenObject ts(8,A3,A2,9,300,480,320,0,0,0,1023,1023); // rx is the resistance between X+ and X- Use any multimeter to read it or leave it blanc
@@ -17,9 +19,11 @@ Label label(20,10,"Patata", 1,Color(255,255,255));
 //Rectangle rectangle(50,50,400,200,Color(0,255,255),Color(255,200,0),label);
 //Rectangle rectangle2(410,30,470,300,Color(0,255,255),Color(255,200,0),label2);
 //RectangleButton rectangleBtn(100,50,400,200,Color(0,255,255),Color(255,200,0),label, ts);
+//RoundRectangle roundRectangle(50,100,400,250,20,Color(255,255,255),Color(0,255,40),label);
+RoundRectangleButton roundRectangleBtn(50,100,400,250,20,Color(255,120,0),Color(0,255,40),label,ts);
 //Picture picture(30,50,"test.bmp");
 //Picture picture(30,50,"05v2.bmp");
-PictureButton pictureButton(150,50, "05v2.bmp",ts);
+//PictureButton pictureButton(150,50, "05v2.bmp",ts);
 
 
 void setup() {
@@ -40,10 +44,12 @@ void setup() {
     Serial.println(rectangleBtn.getMainColor().to565(),HEX);
 
     Serial.println('\n');*/
-    my_lcd.draw(label);
+    //my_lcd.draw(label);
     //my_lcd.draw(rectangle);
     //my_lcd.draw(rectangle2);
     //my_lcd.draw(rectangleBtn);
+    //my_lcd.draw(roundRectangle);
+    my_lcd.draw(roundRectangleBtn);
 /*
     picture.init();
     my_lcd.draw(picture); // hace copia cuidadooooooooo
@@ -51,10 +57,10 @@ void setup() {
     Serial.println(picture.getx1());
     Serial.println(picture.gety1());*/
 
-    pictureButton.init();
+    /*pictureButton.init();
     my_lcd.draw(pictureButton);
     Serial.println(pictureButton.getx1());
-    Serial.println(pictureButton.gety1());
+    Serial.println(pictureButton.gety1());*/
     //Serial.println(my_lcd.draw(picture));
 
     //my_lcd.show(line);
@@ -69,12 +75,14 @@ void loop()
     my_lcd.show(rectangle);
     Serial.println(freeMemory());
     Serial.println(i);
-    i++;*//*
+    i++;*/
     delay(10);
     //rectangleBtn.isPressed();
-    if(rectangleBtn.isPressed())
-    Serial.println("Boton pulsado");*/
-    if(pictureButton.isPressed())
+    /*if(rectangleBtn.isPressed())
+    Serial.println("Boton pulsado");
+    /*if(pictureButton.isPressed())
+        Serial.println("Boton pulsado");*/
+    if(roundRectangleBtn.isPressed())
         Serial.println("Boton pulsado");
 }
 

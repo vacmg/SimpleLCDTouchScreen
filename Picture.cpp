@@ -11,6 +11,7 @@ Picture::Picture(): ScreenObjectWithXtraCoords(0,0,0,0, Color(0,0,0)), ScreenObj
     this->bmpWidth = 0;
     this->bmpHeight = 0;
     this->ignoreBytes = 0;
+    this->readyToUse = false;
 }
 
 Picture::Picture(int x, int y, char *picturePath): ScreenObjectWithXtraCoords(x,y,x,y, Color(0,0,0)), ScreenObject(x, y, Color(0,0,0))
@@ -20,6 +21,7 @@ Picture::Picture(int x, int y, char *picturePath): ScreenObjectWithXtraCoords(x,
     this->bmpWidth = 0;
     this->bmpHeight = 0;
     this->ignoreBytes = 0;
+    this->readyToUse = false;
 }
 
 Picture::Picture(int x, int y, char *picturePath, Color mainColor): ScreenObject(x, y, mainColor)
@@ -29,6 +31,7 @@ Picture::Picture(int x, int y, char *picturePath, Color mainColor): ScreenObject
     this->bmpWidth = 0;
     this->bmpHeight = 0;
     this->ignoreBytes = 0;
+    this->readyToUse = false;
 }
 
 char* Picture::getPicturePath()
@@ -45,7 +48,9 @@ bool Picture::startSD(uint8_t sd_cs)
 // Call it before accessing any of its members
 bool Picture::init()
 {
-    return bmpHeaderAnalysis();
+    if(!readyToUse)
+        readyToUse = bmpHeaderAnalysis();
+    return readyToUse;
 }
 
 bool Picture::bmpHeaderAnalysis()
@@ -129,4 +134,9 @@ uint32_t Picture::getIgnoreBytes()
     if(ignoreBytes==0)
         init();
     return ignoreBytes;
+}
+
+bool Picture::isReadyToUse()
+{
+    return readyToUse;
 }
