@@ -4,19 +4,30 @@
 
 #include "ScreenObjectWithLabel.h"
 
+// TODO set alingnment (left, center, right)
+
+ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor, Label label, bool disableAutoSize):ScreenObject(x, y, mainColor)
+{
+    this->label = label;
+    this->validLabel = true;
+    this->margin = defaultMargin;
+    this->disableAutoSize = disableAutoSize;
+}
+
 ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor, Label label):ScreenObject(x, y, mainColor)
 {
     this->label = label;
     this->validLabel = true;
     this->margin = defaultMargin;
+    this->disableAutoSize = false;
 }
 
 ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor):ScreenObject(x, y, mainColor)
 {
-
     this->label = Label(0, 0, "0", 0, Color(0,0,0));
     this->validLabel = false;
     this->margin = defaultMargin;
+    this->disableAutoSize = false;
 }
 
 ScreenObjectWithLabel::ScreenObjectWithLabel()
@@ -24,6 +35,7 @@ ScreenObjectWithLabel::ScreenObjectWithLabel()
     this->label = Label(0, 0, "0", 0, Color(0,0,0));
     this->validLabel = false;
     this->margin = defaultMargin;
+    this->disableAutoSize = false;
 }
 
 Label ScreenObjectWithLabel::getLabel()
@@ -55,7 +67,7 @@ void ScreenObjectWithLabel::updateLabelLocation(uint8_t margin)
     int wordSizeY = sizeY-2*borderY;
     int fontSizeX = wordSizeX/((wlen-1)*(blockSizeX+1)+blockSizeX);
     int fontSizeY = wordSizeY/blockSizeY;
-    int fontSize = fontSizeX<fontSizeY?fontSizeX:fontSizeY;
+    int fontSize = disableAutoSize ? getLabel().getFontSize() : (fontSizeX<fontSizeY?fontSizeX:fontSizeY); // todo test this
 
     wordSizeX = ((wlen-1)*(blockSizeX+1)+blockSizeX)*fontSize;
     wordSizeY = blockSizeY*fontSize;
@@ -96,3 +108,10 @@ void ScreenObjectWithLabel::setCoords1(int x, int y)
     ScreenObjectWithXtraCoords::setCoords1(x, y);
     updateLabelLocation(margin);
 }
+
+bool ScreenObjectWithLabel::isAutoSizeDisabled()
+{
+    return disableAutoSize;
+}
+
+

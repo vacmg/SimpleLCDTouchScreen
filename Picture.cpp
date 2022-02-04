@@ -55,7 +55,7 @@ bool Picture::init()
 
 bool Picture::bmpHeaderAnalysis()
 {
-    if(picturePath== nullptr)
+    if(picturePath == nullptr)
         return false;
     File file = SD.open(picturePath,FILE_READ);
     if(!file)

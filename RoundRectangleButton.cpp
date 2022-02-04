@@ -9,12 +9,22 @@ RoundRectangleButton::RoundRectangleButton(int x, int y, int x1, int y1, uint8_t
 
 }
 
+RoundRectangleButton::RoundRectangleButton(int x, int y, int x1, int y1, uint8_t radius, Color mainColor,Color secondaryColor, Label label, bool disableAutoSize, TouchScreenObject ts): RoundRectangle(x,y,x1,y1,radius,mainColor,secondaryColor,label, disableAutoSize), ScreenObjectWithTouch(x, y, x1, y1, mainColor, ts), ScreenObjectWithLabel(x,y,mainColor,label, disableAutoSize), ScreenObjectWithSecondaryColor(x,y,mainColor,secondaryColor), ScreenObjectWithXtraCoords(x,y,x1,y1,mainColor), ScreenObject(x,y,mainColor)
+{
+
+}
+
 RoundRectangleButton::RoundRectangleButton(int x, int y, int x1, int y1, uint8_t radius, Color mainColor, Color secondaryColor, TouchScreenObject ts): RoundRectangle(x,y,x1,y1,radius,mainColor,secondaryColor), ScreenObjectWithTouch(x, y, x1, y1, mainColor, ts), ScreenObjectWithLabel(x,y,mainColor), ScreenObjectWithSecondaryColor(x,y,mainColor,secondaryColor), ScreenObjectWithXtraCoords(x,y,x1,y1,mainColor), ScreenObject(x,y,mainColor)
 {
 
 }
 
-RoundRectangleButton::RoundRectangleButton(int x, int y, int x1, int y1, uint8_t radius, Color mainColor, Label label,TouchScreenObject ts): RoundRectangle(x,y,x1,y1,radius,mainColor,label), ScreenObjectWithTouch(x, y, x1, y1, mainColor, ts), ScreenObjectWithLabel(x,y,mainColor,label), ScreenObjectWithSecondaryColor(x,y,mainColor), ScreenObjectWithXtraCoords(x,y,x1,y1,mainColor), ScreenObject(x,y,mainColor)
+RoundRectangleButton::RoundRectangleButton(int x, int y, int x1, int y1, uint8_t radius, Color mainColor, Label label, TouchScreenObject ts): RoundRectangle(x,y,x1,y1,radius,mainColor,label), ScreenObjectWithTouch(x, y, x1, y1, mainColor, ts), ScreenObjectWithLabel(x,y,mainColor,label), ScreenObjectWithSecondaryColor(x,y,mainColor), ScreenObjectWithXtraCoords(x,y,x1,y1,mainColor), ScreenObject(x,y,mainColor)
+{
+
+}
+
+RoundRectangleButton::RoundRectangleButton(int x, int y, int x1, int y1, uint8_t radius, Color mainColor, Label label, bool disableAutoSize, TouchScreenObject ts): RoundRectangle(x,y,x1,y1,radius,mainColor,label,disableAutoSize), ScreenObjectWithTouch(x, y, x1, y1, mainColor, ts), ScreenObjectWithLabel(x,y,mainColor,label,disableAutoSize), ScreenObjectWithSecondaryColor(x,y,mainColor), ScreenObjectWithXtraCoords(x,y,x1,y1,mainColor), ScreenObject(x,y,mainColor)
 {
 
 }
