@@ -23,11 +23,11 @@ public:
     SimpleLCDTouchScreen(int16_t wid, int16_t heg, uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t reset);
     void Init_LCD();
     void set_sd_cs(uint8_t sd_cs);
-    bool draw(Line line);
-    bool draw(Label label);
-    bool draw(Rectangle rectangle);
-    bool draw(RoundRectangle roundRectangle);
-    bool draw(Picture picture);
+    bool draw(Line* line);
+    bool draw(Label* label);
+    bool draw(Rectangle* rectangle);
+    bool draw(RoundRectangle* roundRectangle);
+    bool draw(Picture* picture);
 
 private:
     /*SD ACCESS*/

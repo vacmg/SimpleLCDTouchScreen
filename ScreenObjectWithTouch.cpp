@@ -4,7 +4,7 @@
 
 #include "ScreenObjectWithTouch.h"
 
-ScreenObjectWithTouch::ScreenObjectWithTouch(int x, int y, int x1, int y1, Color mainColor, TouchScreenObject ts): ScreenObjectWithXtraCoords(x, y, x1, y1, mainColor)
+ScreenObjectWithTouch::ScreenObjectWithTouch(int x, int y, int x1, int y1, Color mainColor, TouchScreenObject* ts): ScreenObjectWithXtraCoords(x, y, x1, y1, mainColor)
 {
     this->ts=ts;
 }
@@ -12,7 +12,7 @@ ScreenObjectWithTouch::ScreenObjectWithTouch(int x, int y, int x1, int y1, Color
 // Be carefull to no NOT call this function BEFORE calling SimpleLCDTouchScreen::Init_TouchScreen()
 bool ScreenObjectWithTouch::isPressed()
 {
-    TSPoint point = ts.getPoint();
+    TSPoint point = ts->getPoint();
 
     if(point.z > 50)
     {
@@ -21,7 +21,7 @@ bool ScreenObjectWithTouch::isPressed()
     else return false;
 }
 
-void ScreenObjectWithTouch::setTouchScreenObject(TouchScreenObject ts)
+void ScreenObjectWithTouch::setTouchScreenObject(TouchScreenObject* ts)
 {
     this->ts = ts;
 }

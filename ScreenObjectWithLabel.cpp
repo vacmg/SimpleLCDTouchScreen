@@ -6,7 +6,7 @@
 
 // TODO set alingnment (left, center, right)
 
-ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor, Label label, bool disableAutoSize):ScreenObject(x, y, mainColor)
+ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor, Label* label, bool disableAutoSize):ScreenObject(x, y, mainColor)
 {
     this->label = label;
     this->validLabel = true;
@@ -14,7 +14,7 @@ ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor, Labe
     this->disableAutoSize = disableAutoSize;
 }
 
-ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor, Label label):ScreenObject(x, y, mainColor)
+ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor, Label* label):ScreenObject(x, y, mainColor)
 {
     this->label = label;
     this->validLabel = true;
@@ -24,7 +24,7 @@ ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor, Labe
 
 ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor):ScreenObject(x, y, mainColor)
 {
-    this->label = Label(0, 0, "0", 0, Color(0,0,0));
+    this->label = nullptr;
     this->validLabel = false;
     this->margin = defaultMargin;
     this->disableAutoSize = false;
@@ -32,13 +32,13 @@ ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor):Scre
 
 ScreenObjectWithLabel::ScreenObjectWithLabel()
 {
-    this->label = Label(0, 0, "0", 0, Color(0,0,0));
+    this->label = nullptr;
     this->validLabel = false;
     this->margin = defaultMargin;
     this->disableAutoSize = false;
 }
 
-Label ScreenObjectWithLabel::getLabel()
+Label* ScreenObjectWithLabel::getLabel()
 {
     return label;
 }
@@ -48,7 +48,7 @@ bool ScreenObjectWithLabel::isAValidLabel()
     return validLabel;
 }
 
-void ScreenObjectWithLabel::setLabel(Label label)
+void ScreenObjectWithLabel::setLabel(Label* label)
 {
     this->label = label;
 }
@@ -58,7 +58,7 @@ void ScreenObjectWithLabel::setLabel(Label label)
 // With that scheme, it gets the fontSize. The second part of the algorythm uses the fontSize to get the coords used to draw the label
 void ScreenObjectWithLabel::updateLabelLocation(uint8_t margin)
 {
-    int wlen = strlen(getLabel().getString());
+    int wlen = strlen(getLabel()->getString());
     int sizeX = getx1()-getx();
     int sizeY = gety1()-gety();
     int borderX = sizeX/margin;
@@ -67,7 +67,7 @@ void ScreenObjectWithLabel::updateLabelLocation(uint8_t margin)
     int wordSizeY = sizeY-2*borderY;
     int fontSizeX = wordSizeX/((wlen-1)*(blockSizeX+1)+blockSizeX);
     int fontSizeY = wordSizeY/blockSizeY;
-    int fontSize = disableAutoSize ? getLabel().getFontSize() : (fontSizeX<fontSizeY?fontSizeX:fontSizeY); // todo test this
+    int fontSize = disableAutoSize ? getLabel()->getFontSize() : (fontSizeX<fontSizeY?fontSizeX:fontSizeY); // todo test this
 
     wordSizeX = ((wlen-1)*(blockSizeX+1)+blockSizeX)*fontSize;
     wordSizeY = blockSizeY*fontSize;
@@ -75,16 +75,8 @@ void ScreenObjectWithLabel::updateLabelLocation(uint8_t margin)
     borderX = (sizeX - wordSizeX)/2;
     borderY = (sizeY - wordSizeY)/2;
 
-    if (getLabel().isAValidSecondaryColor())
-    {
-        Label newLabel = Label(getx()+borderX,gety()+borderY,getLabel().getString(),fontSize,getLabel().getMainColor(),getLabel().getSecondaryColor());
-        setLabel(newLabel);
-    }
-    else
-    {
-        Label newLabel = Label(getx()+borderX,gety()+borderY,getLabel().getString(),fontSize,getLabel().getMainColor());
-        setLabel(newLabel);
-    }
+    label->setCoords(getx()+borderX,gety()+borderY);
+    label->setFontSize(fontSize);
 }
 
 int ScreenObjectWithLabel::getMargin()

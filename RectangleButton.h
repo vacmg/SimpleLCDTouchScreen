@@ -11,12 +11,12 @@
 class RectangleButton: virtual public Rectangle, virtual public ScreenObjectWithTouch, virtual public ScreenObjectWithLabel, virtual public ScreenObjectWithSecondaryColor, virtual public ScreenObjectWithXtraCoords, virtual public ScreenObject
 {
 public:
-    RectangleButton(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, Label label, TouchScreenObject ts);
-    RectangleButton(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, Label label, bool disableAutoSize, TouchScreenObject ts);
-    RectangleButton(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, TouchScreenObject ts);
-    RectangleButton(int x, int y, int x1, int y1, Color mainColor, Label label, TouchScreenObject ts);
-    RectangleButton(int x, int y, int x1, int y1, Color mainColor, Label label, bool disableAutoSize, TouchScreenObject ts);
-    RectangleButton(int x, int y, int x1, int y1, Color mainColor, TouchScreenObject ts);
+    RectangleButton(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, Label* label, TouchScreenObject* ts);
+    RectangleButton(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, Label* label, bool disableAutoSize, TouchScreenObject* ts);
+    RectangleButton(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, TouchScreenObject* ts);
+    RectangleButton(int x, int y, int x1, int y1, Color mainColor, Label* label, TouchScreenObject* ts);
+    RectangleButton(int x, int y, int x1, int y1, Color mainColor, Label* label, bool disableAutoSize, TouchScreenObject* ts);
+    RectangleButton(int x, int y, int x1, int y1, Color mainColor, TouchScreenObject* ts);
 };
 
 

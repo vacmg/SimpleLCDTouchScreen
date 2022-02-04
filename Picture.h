@@ -18,16 +18,16 @@ public:
     Picture(int x, int y, char* picturePath, Color mainColor);
     Picture();
     char* getPicturePath();
+    bool setPicturePath(char* picturePath);
     bool init();
-    bool bmpHeaderAnalysis();
     uint32_t getBmpOffset();
     uint32_t getBmpWidth();
     uint32_t getBmpHeight();
     uint32_t getIgnoreBytes();
     bool isReadyToUse();
 
-    static bool startSD(uint8_t sd_cs);
 private:
+    bool bmpHeaderAnalysis();
     uint32_t read_32(File file);
     uint16_t read_16(File file);
     bool readyToUse;

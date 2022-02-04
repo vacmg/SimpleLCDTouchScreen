@@ -39,10 +39,10 @@ char* Picture::getPicturePath()
     return picturePath;
 }
 
-bool Picture::startSD(uint8_t sd_cs)
+bool Picture::setPicturePath(char *picturePath)
 {
-    pinMode(sd_cs,OUTPUT);
-    return SD.begin(sd_cs);
+    this->picturePath = picturePath;
+    return init();
 }
 
 // Call it before accessing any of its members

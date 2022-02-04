@@ -11,11 +11,11 @@
 class Rectangle: virtual public ScreenObjectWithSecondaryColor, virtual public ScreenObjectWithLabel
 {
 public:
-    Rectangle(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, Label label);
-    Rectangle(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, Label label, bool disableAutoSize);
+    Rectangle(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, Label* label);
+    Rectangle(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor, Label* label, bool disableAutoSize);
     Rectangle(int x, int y, int x1, int y1, Color mainColor, Color secondaryColor);
-    Rectangle(int x, int y, int x1, int y1, Color mainColor, Label label);
-    Rectangle(int x, int y, int x1, int y1, Color mainColor, Label label, bool disableAutoSize);
+    Rectangle(int x, int y, int x1, int y1, Color mainColor, Label* label);
+    Rectangle(int x, int y, int x1, int y1, Color mainColor, Label* label, bool disableAutoSize);
     Rectangle(int x, int y, int x1, int y1, Color mainColor);
 private:
     const int margin = 32;

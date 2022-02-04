@@ -9,13 +9,13 @@
 
 class ScreenObjectWithPicture: virtual public ScreenObject
 {
-    ScreenObjectWithPicture(int x, int y, Color mainColor, Picture picture);
+    ScreenObjectWithPicture(int x, int y, Color mainColor, Picture* picture);
     ScreenObjectWithPicture();
-    Picture getPicture();
-    void setPicture(Picture picture);
+    Picture* getPicture();
+    void setPicture(Picture* picture);
     bool isAValidPicture();
 private:
-    Picture picture;
+    Picture* picture;
     bool validPicture;
 };
 

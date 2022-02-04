@@ -62,8 +62,8 @@ void setup() {
     //my_lcd.draw(roundRectangle);
    // my_lcd.draw(roundRectangleBtn);
 
-    picture.init();
-    my_lcd.draw(picture); // hace copia cuidadooooooooo
+    // picture.init();
+    my_lcd.draw(&picture); // ya no hace copia
     
     //Serial.println(picture.getx1());
     //Serial.println(picture.gety1());

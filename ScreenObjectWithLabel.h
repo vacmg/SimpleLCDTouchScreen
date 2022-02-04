@@ -11,14 +11,14 @@
 class ScreenObjectWithLabel: virtual public ScreenObjectWithXtraCoords
 {
 public:
-    ScreenObjectWithLabel(int x, int y, Color mainColor, Label label);
+    ScreenObjectWithLabel(int x, int y, Color mainColor, Label* label);
     ScreenObjectWithLabel(int x, int y, Color mainColor);
-    ScreenObjectWithLabel(int x, int y, Color mainColor, Label label, bool disableAutoSize);
+    ScreenObjectWithLabel(int x, int y, Color mainColor, Label* label, bool disableAutoSize);
     ScreenObjectWithLabel();
     bool isAValidLabel();
     bool isAutoSizeDisabled();
-    Label getLabel();
-    void setLabel(Label label);
+    Label* getLabel();
+    void setLabel(Label* label);
     void updateLabelLocation(uint8_t margin);
     int getMargin();
     void setMargin(int margin);
@@ -27,7 +27,7 @@ public:
 private:
     static const uint8_t blockSizeX = 5;
     static const uint8_t blockSizeY = 7;
-    Label label;
+    Label* label;
     bool validLabel;
     bool disableAutoSize;
     int margin;

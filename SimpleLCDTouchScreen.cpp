@@ -13,81 +13,81 @@ SimpleLCDTouchScreen::SimpleLCDTouchScreen(uint16_t model1, uint8_t cs1, uint8_t
     sd_cs = 10;
 }
 
-bool SimpleLCDTouchScreen::draw(Line line)
+bool SimpleLCDTouchScreen::draw(Line* line)
 {
-    this->Set_Draw_color(line.getMainColor().to565());
-    this->Draw_Line(line.getx(),line.gety(),line.getx1(),line.gety1());
+    this->Set_Draw_color(line->getMainColor().to565());
+    this->Draw_Line(line->getx(),line->gety(),line->getx1(),line->gety1());
     return true;
 }
 
-bool SimpleLCDTouchScreen::draw(Label label)
+bool SimpleLCDTouchScreen::draw(Label* label)
 {
-    this->Set_Text_colour(label.getMainColor().to565());
-    if (label.isAValidSecondaryColor())
+    this->Set_Text_colour(label->getMainColor().to565());
+    if (label->isAValidSecondaryColor())
     {
-        this->Set_Text_Back_colour(label.getSecondaryColor().to565());
+        this->Set_Text_Back_colour(label->getSecondaryColor().to565());
         this->Set_Text_Mode(false);
     }
     else
         this->Set_Text_Mode(true);
-    this->Set_Text_Size(label.getFontSize());
-    this->Print_String(label.getString(),label.getx(),label.gety());
+    this->Set_Text_Size(label->getFontSize());
+    this->Print_String(label->getString(),label->getx(),label->gety());
     return true;
 }
 
-bool SimpleLCDTouchScreen::draw(Rectangle rectangle)
+bool SimpleLCDTouchScreen::draw(Rectangle* rectangle)
 {
-    if(rectangle.isAValidSecondaryColor())
+    if(rectangle->isAValidSecondaryColor())
     {
-        this->Set_Draw_color(rectangle.getSecondaryColor().to565());
-        this->Fill_Rectangle(rectangle.getx(), rectangle.gety(), rectangle.getx1(), rectangle.gety1());
+        this->Set_Draw_color(rectangle->getSecondaryColor().to565());
+        this->Fill_Rectangle(rectangle->getx(), rectangle->gety(), rectangle->getx1(), rectangle->gety1());
     }
-    this->Set_Draw_color(rectangle.getMainColor().to565());
-    this->Draw_Rectangle(rectangle.getx(),rectangle.gety(),rectangle.getx1(),rectangle.gety1());
-    if(rectangle.isAValidLabel())
+    this->Set_Draw_color(rectangle->getMainColor().to565());
+    this->Draw_Rectangle(rectangle->getx(),rectangle->gety(),rectangle->getx1(),rectangle->gety1());
+    if(rectangle->isAValidLabel())
     {
-        rectangle.updateLabelLocation(rectangle.getMargin());
-        draw(rectangle.getLabel());
-    }
-    return true;
-}
-
-bool SimpleLCDTouchScreen::draw(RoundRectangle roundRectangle)
-{
-    if(roundRectangle.isAValidSecondaryColor())
-    {
-        this->Set_Draw_color(roundRectangle.getSecondaryColor().to565());
-        this->Fill_Round_Rectangle(roundRectangle.getx(), roundRectangle.gety(), roundRectangle.getx1(), roundRectangle.gety1(), roundRectangle.getRadius());
-    }
-    this->Set_Draw_color(roundRectangle.getMainColor().to565());
-    this->Draw_Round_Rectangle(roundRectangle.getx(),roundRectangle.gety(),roundRectangle.getx1(),roundRectangle.gety1(),roundRectangle.getRadius());
-    if(roundRectangle.isAValidLabel())
-    {
-        roundRectangle.updateLabelLocation(roundRectangle.getMargin());
-        draw(roundRectangle.getLabel());
+        rectangle->updateLabelLocation(rectangle->getMargin());
+        draw(rectangle->getLabel());
     }
     return true;
 }
 
-bool SimpleLCDTouchScreen::draw(Picture picture)
+bool SimpleLCDTouchScreen::draw(RoundRectangle* roundRectangle)
 {
-    File file = SD.open(picture.getPicturePath(),FILE_READ);
+    if(roundRectangle->isAValidSecondaryColor())
+    {
+        this->Set_Draw_color(roundRectangle->getSecondaryColor().to565());
+        this->Fill_Round_Rectangle(roundRectangle->getx(), roundRectangle->gety(), roundRectangle->getx1(), roundRectangle->gety1(), roundRectangle->getRadius());
+    }
+    this->Set_Draw_color(roundRectangle->getMainColor().to565());
+    this->Draw_Round_Rectangle(roundRectangle->getx(),roundRectangle->gety(),roundRectangle->getx1(),roundRectangle->gety1(),roundRectangle->getRadius());
+    if(roundRectangle->isAValidLabel())
+    {
+        roundRectangle->updateLabelLocation(roundRectangle->getMargin());
+        draw(roundRectangle->getLabel());
+    }
+    return true;
+}
+
+bool SimpleLCDTouchScreen::draw(Picture* picture)
+{
+    File file = SD.open(picture->getPicturePath(),FILE_READ);
     if(isSDReady)
     {
-        if(picture.bmpHeaderAnalysis())
+        if(picture->init())
         {
-            drawBmpPicture(picture.getx(), picture.gety(), file, picture.getBmpOffset(), picture.getBmpHeight(), picture.getBmpWidth(), picture.getIgnoreBytes());
+            drawBmpPicture(picture->getx(), picture->gety(), file, picture->getBmpOffset(), picture->getBmpHeight(), picture->getBmpWidth(), picture->getIgnoreBytes());
             return true;
         }
         else
         {
-            draw(Label(picture.getx(),picture.gety(),"Failure decoding .bmp",2,Color(255,255,255),Color(255,0,0)));
+            draw(&Label(picture->getx(),picture->gety(),"Failure decoding .bmp",2,Color(255,255,255),Color(255,0,0)));
             return false;
         }
     }
     else
     {
-        draw(Label(picture.getx(),picture.gety(),"Failure starting the SD card",2,Color(255,255,255),Color(255,0,0)));
+        draw(&Label(picture->getx(),picture->gety(),"Failure starting the SD card",2,Color(255,255,255),Color(255,0,0)));
         return false;
     }
 }
@@ -95,7 +95,8 @@ bool SimpleLCDTouchScreen::draw(Picture picture)
 void SimpleLCDTouchScreen::Init_LCD()
 {
     LCDWIKI_KBV::Init_LCD();
-    isSDReady = Picture::startSD(sd_cs);
+    pinMode(sd_cs,OUTPUT);
+    isSDReady = SD.begin(sd_cs);
 }
 
 void SimpleLCDTouchScreen::set_sd_cs(uint8_t sd_cs)
@@ -106,9 +107,9 @@ void SimpleLCDTouchScreen::set_sd_cs(uint8_t sd_cs)
 void SimpleLCDTouchScreen::drawBmpPicture(int x, int y, File file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes)
 {
     file.seek(offset);
-    for(int row = height-1; row>=0;row--)
+    for(uint32_t row = height-1; row>=0;row--)
     {
-        for(int col = 0; col<width;col++)
+        for(uint32_t col = 0; col<width;col++)
         {
             uint8_t colors[3];
             for(int i = 0; i<3;i++)
@@ -116,7 +117,7 @@ void SimpleLCDTouchScreen::drawBmpPicture(int x, int y, File file, uint32_t offs
                 colors[i] = file.read();
             }
             Set_Draw_color(LCDWIKI_KBV::Color_To_565(colors[2],colors[1],colors[0]));
-            Draw_Pixel(x+col,y+row);
+            Draw_Pixel((int)(x+col),(int)(y+row));
         }
         file.seek(file.position()+ignoreBytes);
     }

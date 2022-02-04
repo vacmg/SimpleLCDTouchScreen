@@ -4,7 +4,7 @@
 
 #include "PictureButton.h"
 
-PictureButton::PictureButton(int x, int y, char *picturePath, TouchScreenObject ts): Picture(x,y,picturePath), ScreenObjectWithTouch(x,y,x,y,Color(0,0,0),ts)
+PictureButton::PictureButton(int x, int y, char *picturePath, TouchScreenObject* ts): Picture(x,y,picturePath), ScreenObjectWithTouch(x,y,x,y,Color(0,0,0),ts)
 {
 
 }
