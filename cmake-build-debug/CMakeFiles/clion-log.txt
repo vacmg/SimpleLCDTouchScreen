@@ -1,0 +1,130 @@
+"C:\Program Files\JetBrains\CLion 2021.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" E:\Datos\Documentos\Proyectos\SimpleLCDTouchScreen
+CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+CMake Deprecation Warning at cmake/Platform/Arduino.cmake:285 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+Call Stack (most recent call first):
+  C:/Program Files/JetBrains/CLion 2021.3/bin/cmake/win/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake:27 (include)
+  CMakeLists.txt:11 (project)
+
+
+CMake Deprecation Warning at cmake/Platform/Arduino.cmake:285 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+Call Stack (most recent call first):
+  C:/Program Files/JetBrains/CLion 2021.3/bin/cmake/win/share/cmake-3.21/Modules/CMakeCInformation.cmake:66 (include)
+  CMakeLists.txt:11 (project)
+
+
+CMake Deprecation Warning at cmake/Platform/Arduino.cmake:285 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+Call Stack (most recent call first):
+  C:/Program Files/JetBrains/CLion 2021.3/bin/cmake/win/share/cmake-3.21/Modules/CMakeCXXInformation.cmake:65 (include)
+  CMakeLists.txt:11 (project)
+
+
+-- Generating SimpleLCDTouchScreen
+-- Generating uno_LCDWIKI_KBV for library LCDWIKI_KBV
+-- Generating uno_lcd_registers for library lcd_registers
+-- Found library lcd_registers needs uno_LCDWIKI_KBV
+-- Found library lcd_registers needs uno_LCDWIKI_KBV
+-- Generating uno_lcd_mode for library lcd_mode
+-- Found library lcd_mode needs uno_lcd_registers
+-- Found library lcd_mode needs uno_LCDWIKI_KBV
+-- Found library lcd_mode needs uno_lcd_registers
+-- Generating uno_mcu_8bit_magic for library mcu_8bit_magic
+-- Found library mcu_8bit_magic needs uno_lcd_mode
+-- Found library mcu_8bit_magic needs uno_LCDWIKI_KBV
+-- Found library mcu_8bit_magic needs uno_lcd_registers
+-- Found library mcu_8bit_magic needs uno_lcd_mode
+-- Generating uno_mcu_16bit_magic for library mcu_16bit_magic
+-- Found library mcu_16bit_magic needs uno_mcu_8bit_magic
+-- Found library mcu_16bit_magic needs uno_LCDWIKI_KBV
+-- Found library mcu_16bit_magic needs uno_lcd_registers
+-- Found library mcu_16bit_magic needs uno_lcd_mode
+-- Found library mcu_16bit_magic needs uno_mcu_8bit_magic
+-- Generating uno_LCDWIKI_GUI for library LCDWIKI_GUI
+-- Found library LCDWIKI_GUI needs uno_mcu_16bit_magic
+-- Generating uno_LCDWIKI_font for library LCDWIKI_font
+-- Found library LCDWIKI_font needs uno_mcu_16bit_magic
+-- Found library LCDWIKI_GUI needs uno_LCDWIKI_GUI;uno_LCDWIKI_font
+-- Found library mcu_8bit_magic needs uno_LCDWIKI_KBV;uno_lcd_registers;uno_lcd_mode;uno_mcu_8bit_magic;uno_LCDWIKI_GUI;uno_LCDWIKI_font;uno_mcu_16bit_magic
+-- Found library lcd_mode needs uno_LCDWIKI_KBV;uno_lcd_registers;uno_lcd_mode;uno_mcu_8bit_magic;uno_LCDWIKI_GUI;uno_LCDWIKI_font;uno_mcu_16bit_magic
+-- Found library lcd_mode needs uno_mcu_16bit_magic
+-- Found library lcd_registers needs uno_LCDWIKI_KBV;uno_lcd_registers;uno_lcd_mode;uno_mcu_8bit_magic;uno_LCDWIKI_GUI;uno_LCDWIKI_font;uno_mcu_16bit_magic
+-- Found library lcd_registers needs uno_mcu_8bit_magic
+-- Found library lcd_registers needs uno_mcu_16bit_magic
+-- Found library LCDWIKI_KBV needs uno_LCDWIKI_KBV;uno_lcd_registers;uno_lcd_mode;uno_mcu_8bit_magic;uno_LCDWIKI_GUI;uno_LCDWIKI_font;uno_mcu_16bit_magic
+-- Found library LCDWIKI_KBV needs uno_lcd_mode
+-- Found library LCDWIKI_KBV needs uno_mcu_8bit_magic
+-- Found library LCDWIKI_KBV needs uno_mcu_16bit_magic
+-- Generating uno_TouchScreen for library TouchScreen
+-- Using C:/Program Files (x86)/Arduino/hardware/tools/avr/bin/avr-objcopy.exe for converting firmware image to hex
+Missing uno.bootloader.path, not creating bootloader burn target SimpleLCDTouchScreen-burn-bootloader.
+-- AVR Boards:
+--                   menu: 
+--                    yun: Arduino Y
+--                    uno: Arduino Uno
+--              diecimila: Arduino Duemilanove or Diecimila
+--                   nano: Arduino Nano
+--                   mega: Arduino Mega or Mega 2560
+--                megaADK: Arduino Mega ADK
+--               leonardo: Arduino Leonardo
+--            leonardoeth: Arduino Leonardo ETH
+--                  micro: Arduino Micro
+--                esplora: Arduino Esplora
+--                   mini: Arduino Mini
+--               ethernet: Arduino Ethernet
+--                    fio: Arduino Fio
+--                     bt: Arduino BT
+--             LilyPadUSB: LilyPad Arduino USB
+--                lilypad: LilyPad Arduino
+--                    pro: Arduino Pro or Pro Mini
+--               atmegang: Arduino NG or older
+--           robotControl: Arduino Robot Control
+--             robotMotor: Arduino Robot Motor
+--                  gemma: Arduino Gemma
+--     circuitplay32u4cat: Adafruit Circuit Playground
+--                yunmini: Arduino Y
+--                chiwawa: Arduino Industrial 101
+--                    one: Linino One
+--                unowifi: Arduino Uno WiFi
+-- 
+-- 
+-- AVR Programmers:
+--                     avrisp: AVR ISP
+--                 avrispmkii: AVRISP mkII
+--                 usbtinyisp: USBtinyISP
+--                 arduinoisp: ArduinoISP
+--              arduinoisporg: ArduinoISP.org
+--                     usbasp: USBasp
+--                   parallel: Parallel Programmer
+--               arduinoasisp: Arduino as ISP
+--     arduinoasispatmega32u4: Arduino as ISP (ATmega32U4)
+--                   usbGemma: Arduino Gemma
+--                  buspirate: BusPirate as ISP
+--                     stk500: Atmel STK500 development board
+--                   jtag3isp: Atmel JTAGICE3 (ISP mode)
+--                      jtag3: Atmel JTAGICE3 (JTAG mode)
+--                  atmel_ice: Atmel-ICE (AVR)
+-- 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug

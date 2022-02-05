@@ -4,7 +4,7 @@
 
 #include "ScreenObjectWithLabel.h"
 
-// TODO set alingnment (left, center, right)
+// TODO (feature) set alignment (left, center, right)
 
 ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor, Label* label, bool disableAutoSize):ScreenObject(x, y, mainColor)
 {
@@ -67,7 +67,7 @@ void ScreenObjectWithLabel::updateLabelLocation(uint8_t margin)
     int wordSizeY = sizeY-2*borderY;
     int fontSizeX = wordSizeX/((wlen-1)*(blockSizeX+1)+blockSizeX);
     int fontSizeY = wordSizeY/blockSizeY;
-    int fontSize = disableAutoSize ? getLabel()->getFontSize() : (fontSizeX<fontSizeY?fontSizeX:fontSizeY); // todo test this
+    int fontSize = disableAutoSize ? getLabel()->getFontSize() : (fontSizeX<fontSizeY?fontSizeX:fontSizeY);
 
     wordSizeX = ((wlen-1)*(blockSizeX+1)+blockSizeX)*fontSize;
     wordSizeY = blockSizeY*fontSize;

@@ -1,0 +1,177 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "SimpleLCDTouchScreen",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "SimpleLCDTouchScreen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SimpleLCDTouchScreen-Debug-9ba32cb7aa32e2e4907e.json",
+					"name" : "SimpleLCDTouchScreen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SimpleLCDTouchScreen-burn::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SimpleLCDTouchScreen-burn-Debug-0c48bbeb52ae69f14c21.json",
+					"name" : "SimpleLCDTouchScreen-burn",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SimpleLCDTouchScreen-size::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SimpleLCDTouchScreen-size-Debug-000f097ea68f2d4b1319.json",
+					"name" : "SimpleLCDTouchScreen-size",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SimpleLCDTouchScreen-upload::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SimpleLCDTouchScreen-upload-Debug-b1b19051a27f601a77d0.json",
+					"name" : "SimpleLCDTouchScreen-upload",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uno_CORE::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uno_CORE-Debug-67d03b2f6750bbe19103.json",
+					"name" : "uno_CORE",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uno_LCDWIKI_GUI::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uno_LCDWIKI_GUI-Debug-99f366e6fff3300e2ce6.json",
+					"name" : "uno_LCDWIKI_GUI",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uno_LCDWIKI_KBV::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uno_LCDWIKI_KBV-Debug-a12364eaf84ba6755600.json",
+					"name" : "uno_LCDWIKI_KBV",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uno_LCDWIKI_font::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uno_LCDWIKI_font-Debug-acfc4405271d3110665a.json",
+					"name" : "uno_LCDWIKI_font",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uno_TouchScreen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uno_TouchScreen-Debug-35ff606201d458e3128d.json",
+					"name" : "uno_TouchScreen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uno_lcd_mode::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uno_lcd_mode-Debug-d2d3e55e9ea8f07dc83a.json",
+					"name" : "uno_lcd_mode",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uno_lcd_registers::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uno_lcd_registers-Debug-b2d9a843ab4f72cd7ed8.json",
+					"name" : "uno_lcd_registers",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uno_mcu_16bit_magic::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uno_mcu_16bit_magic-Debug-e66fa2b6bda28d28c4e4.json",
+					"name" : "uno_mcu_16bit_magic",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uno_mcu_8bit_magic::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uno_mcu_8bit_magic-Debug-78aea2530ecdde1dbc5f.json",
+					"name" : "uno_mcu_8bit_magic",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "upload::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-upload-Debug-b41e58d893295f16effe.json",
+					"name" : "upload",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug",
+		"source" : "E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

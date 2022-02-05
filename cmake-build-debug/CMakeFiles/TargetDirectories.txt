@@ -1,0 +1,16 @@
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/uno_lcd_mode.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/uno_CORE.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/uno_LCDWIKI_KBV.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/uno_LCDWIKI_font.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/uno_lcd_registers.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/uno_LCDWIKI_GUI.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/uno_mcu_8bit_magic.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/uno_mcu_16bit_magic.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/uno_TouchScreen.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/SimpleLCDTouchScreen-burn.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/SimpleLCDTouchScreen.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/SimpleLCDTouchScreen-upload.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/SimpleLCDTouchScreen-size.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/upload.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/edit_cache.dir
+E:/Datos/Documentos/Proyectos/SimpleLCDTouchScreen/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+a5e438c1eb894ff17de193e6c9fce502 CMakeFiles/SimpleLCDTouchScreen-burn
+9810c0d939e6c5e27594cb6deea6b14f CMakeFiles/SimpleLCDTouchScreen-size
+197a3c9c3191b90eb233042c2c5a6715 CMakeFiles/SimpleLCDTouchScreen-upload

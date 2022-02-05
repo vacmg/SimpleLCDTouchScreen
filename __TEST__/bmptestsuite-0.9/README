@@ -13,7 +13,7 @@ It also includes an extensive set of unconventional, malformed,
 and even malicious bitmaps.
 
 At this time, it does NOT include any JPEG or PNG compressed bitmaps.
-The full set of missing test cases are described in the TODO file.
+The full set of missing test cases are described in the TOD O file.
 
 Organization
 ============
