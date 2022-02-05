@@ -71,13 +71,12 @@ bool SimpleLCDTouchScreen::draw(RoundRectangle* roundRectangle)
 
 bool SimpleLCDTouchScreen::draw(Picture* picture)
 {
-    File file = SD.open(picture->getPicturePath(),FILE_READ);
     if(isSDReady)
     {
+        File file = SD.open(picture->getPicturePath(),FILE_READ);
         if(picture->init())
         {
-            drawBmpPicture(picture->getx(), picture->gety(), file, picture->getBmpOffset(), picture->getBmpHeight(), picture->getBmpWidth(), picture->getIgnoreBytes());
-            return true;
+            return drawBmpPictureBuff(picture->getx(), picture->gety(), file, picture->getBmpOffset(), picture->getBmpHeight(), picture->getBmpWidth(), picture->getIgnoreBytes());
         }
         else
         {
@@ -104,12 +103,12 @@ void SimpleLCDTouchScreen::set_sd_cs(uint8_t sd_cs)
     this->sd_cs = sd_cs;
 }
 
-void SimpleLCDTouchScreen::drawBmpPicture(int x, int y, File file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes)
+bool SimpleLCDTouchScreen::drawBmpPicture(int x, int y, File file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes)
 {
     file.seek(offset);
-    for(uint32_t row = height-1; row>=0;row--)
+    for(long row = (long)height-1; row>=0;row--)
     {
-        for(uint32_t col = 0; col<width;col++)
+        for(long col = 0; col<width;col++)
         {
             uint8_t colors[3];
             for(int i = 0; i<3;i++)
@@ -122,4 +121,29 @@ void SimpleLCDTouchScreen::drawBmpPicture(int x, int y, File file, uint32_t offs
         file.seek(file.position()+ignoreBytes);
     }
     file.close();
+    return true;
+}
+
+bool SimpleLCDTouchScreen::drawBmpPictureBuff(int x, int y, File file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes)
+{
+    file.seek(offset);
+    uint8_t* rowBuff = (uint8_t*) malloc(width*3*sizeof(uint8_t));
+    if (rowBuff == nullptr)
+    {
+        return drawBmpPicture(x,y,file,offset,height,width,ignoreBytes); // use fallback method (no buffer/slower)
+    }
+    for(long row = (long)height-1; row>=0;row--)
+    {
+        file.read(rowBuff,width*3);
+        for(long col = 0; col<width;col++)
+        {
+            uint32_t pos = (col*3);
+            Set_Draw_color(LCDWIKI_KBV::Color_To_565(rowBuff[pos+2],rowBuff[pos+1],rowBuff[pos]));
+            Draw_Pixel((int)(x+col),(int)(y+row));
+        }
+        file.seek(file.position()+ignoreBytes);
+    }
+    free(rowBuff);
+    file.close();
+    return true;
 }

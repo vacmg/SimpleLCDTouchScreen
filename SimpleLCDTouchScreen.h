@@ -31,7 +31,8 @@ public:
 
 private:
     /*SD ACCESS*/
-    void drawBmpPicture(int x, int y, File file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes);
+    bool drawBmpPicture(int x, int y, File file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes);
+    bool drawBmpPictureBuff(int x, int y, File file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes);
     /*SD ACCESS*/
 
     uint8_t sd_cs;

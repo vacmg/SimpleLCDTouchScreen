@@ -3,8 +3,8 @@
 #include <LCDWIKI_KBV.h>
 #include <LCDWIKI_GUI.h>
 #include <TouchScreen.h>
-#include "SimpleLCDTouchScreen.h"
-#include "Color.h"
+#include <SimpleLCDTouchScreen.h>
+//#include "Color.h"
 
 #define MEGA true
 
@@ -16,13 +16,13 @@ TouchScreenObject ts(8,A3,A2,9,300,320,480,3,924,111,58,935); // rx is the resis
 
 //Line line(93,68,93,68+2*8-2, Color(0,255,0));
 //Line line2(93,68+2*8-2,93+2*6-2,68+2*8-2, Color(255,0,0));
-//Label label(20,10,"Patata", 1,Color(255,255,255));
+Label label(20,10,"Patata", 1,Color(255,255,255));
 //Label label2(60,200,"45", 8,Color(255,255,255), Color(100,100,100));
 //Rectangle rectangle(50,50,400,200,Color(0,255,255),Color(255,200,0),label);
 //Rectangle rectangle2(410,30,470,300,Color(0,255,255),Color(255,200,0),label2);
 //RectangleButton rectangleBtn(100,50,400,200,Color(0,255,255),Color(255,200,0),label, ts);
 //RoundRectangle roundRectangle(50,100,400,250,20,Color(255,255,255),Color(0,255,40),label);
-//RoundRectangleButton roundRectangleBtn(50,100,400,250,20,Color(255,120,0),Color(0,255,40),&label,&ts);
+RoundRectangleButton roundRectangleBtn(50,100,400,250,20,Color(255,120,0),Color(0,255,40),&label,&ts);
 //Picture picture(30,50,"test.bmp");
 //Picture picture(30,50,"05v2.bmp");
 //PictureButton pictureButton(150,50, "05v2.bmp",ts);
@@ -32,7 +32,6 @@ Picture picture(14,44,"schArd.bmp");
 void setup() {
   Serial.begin(9600);
   delay(100);
-  Serial.println("Connected");
   //Serial.println(freeMemory());
   #if MEGA
   my_lcd.set_sd_cs(53);
@@ -45,8 +44,8 @@ void setup() {
   #endif
   my_lcd.Init_LCD();
     my_lcd.Set_Rotation(1);
-    my_lcd.Fill_Screen(0);
-    //my_lcd.Fill_Screen(Color(255,255,255).to565());
+     my_lcd.Fill_Screen(0);
+    my_lcd.Fill_Screen(Color(255,255,255).to565());
     //my_lcd.Fill_Screen(Color(255,0,0).to565());
     //rectangleBtn
 /*
@@ -58,15 +57,7 @@ void setup() {
     Serial.println('\n');*/
 
     // picture.init();
-    char* patata = malloc(500*sizeof(byte));//6500
-    if(patata == NULL)
-    Serial.println("Dale menos");
-    unsigned long b4 = millis();
     my_lcd.draw(&picture); // ya no hace copia
-    unsigned long after = millis();
-    Serial.println(after-b4);
-    //my_lcd.Fill_Screen(Color(255,255,255).to565());
-    free(patata);
     
     //my_lcd.draw(label);
     //my_lcd.draw(rectangle);
@@ -103,8 +94,8 @@ void loop()
     Serial.println("Boton pulsado");
     /*if(pictureButton.isPressed())
         Serial.println("Boton pulsado");*/
-    /*if(roundRectangleBtn.isPressed())
-        Serial.println("Boton pulsado");*/
+    if(roundRectangleBtn.isPressed())
+        Serial.println("Boton pulsado");
 }
 
 #ifdef __arm__
