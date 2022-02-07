@@ -34,7 +34,7 @@ Picture picture(14,44,"schArd.bmp");
 
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   delay(100);
   Serial.println("Connected");
   //Serial.println(freeMemory());
@@ -72,6 +72,8 @@ void setup() {
     Serial.println(after-b4);
     //my_lcd.Fill_Screen(Color(255,255,255).to565());
     free(patata);
+
+    my_lcd.draw(&rboton);
     
     //my_lcd.draw(label);
     //my_lcd.draw(rectangle);
@@ -87,7 +89,7 @@ void setup() {
     my_lcd.draw(pictureButton);
     Serial.println(pictureButton.getx1());
     Serial.println(pictureButton.gety1());*/
-    Serial.println(my_lcd.draw(&picture));
+    //Serial.println(my_lcd.draw(picture));
 
     //my_lcd.show(line);
     //my_lcd.show(line2);
@@ -110,7 +112,7 @@ void loop()
         Serial.println("Boton pulsado");*/
     /*if(roundRectangleBtn.isPressed())
         Serial.println("Boton pulsado");*/
-    /*if(rboton.isPressed())
+    if(rboton.isPressed())
     {
         rboton.setSecondaryColor(Color(0,255,0));
         my_lcd.draw(&rboton);
@@ -118,7 +120,7 @@ void loop()
         while (rboton.isPressed());
         rboton.setSecondaryColor(Color(255,0,0));
         my_lcd.draw(&rboton);
-    }*/
+    }
 }
 
 #ifdef __arm__

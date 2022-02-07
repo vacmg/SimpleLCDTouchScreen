@@ -28,6 +28,9 @@ default_target: all
 
 .SUFFIXES: .hpux_make_needs_suffix_list
 
+# Produce verbose output by default.
+VERBOSE = 1
+
 # Command-line flag to silence nested $(MAKE).
 $(VERBOSE)MAKESILENT = -s
 
@@ -359,15 +362,15 @@ CMakeFiles/SimpleLCDTouchScreen-burn.dir/clean:
 # Target rules for target CMakeFiles/SimpleLCDTouchScreen.dir
 
 # All Build rule for target.
-CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_mcu_16bit_magic.dir/all
-CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_CORE.dir/all
 CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_mcu_8bit_magic.dir/all
-CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_LCDWIKI_KBV.dir/all
-CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_lcd_mode.dir/all
-CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_LCDWIKI_font.dir/all
+CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_mcu_16bit_magic.dir/all
 CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_TouchScreen.dir/all
-CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_lcd_registers.dir/all
+CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_lcd_mode.dir/all
 CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_LCDWIKI_GUI.dir/all
+CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_CORE.dir/all
+CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_LCDWIKI_KBV.dir/all
+CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_LCDWIKI_font.dir/all
+CMakeFiles/SimpleLCDTouchScreen.dir/all: CMakeFiles/uno_lcd_registers.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\SimpleLCDTouchScreen.dir\build.make CMakeFiles/SimpleLCDTouchScreen.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\SimpleLCDTouchScreen.dir\build.make CMakeFiles/SimpleLCDTouchScreen.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=E:\Datos\Documentos\Proyectos\SimpleLCDTouchScreen\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target SimpleLCDTouchScreen"
