@@ -403,7 +403,19 @@
 	[
 		{
 			"backtrace" : 5,
+			"id" : "uno_mcu_16bit_magic::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 5,
 			"id" : "uno_CORE::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 5,
+			"id" : "uno_mcu_8bit_magic::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 5,
+			"id" : "uno_LCDWIKI_KBV::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 5,
@@ -415,27 +427,15 @@
 		},
 		{
 			"backtrace" : 5,
-			"id" : "uno_lcd_registers::@6890427a1f51a3e7e1df"
-		},
-		{
-			"backtrace" : 5,
-			"id" : "uno_mcu_16bit_magic::@6890427a1f51a3e7e1df"
-		},
-		{
-			"backtrace" : 5,
 			"id" : "uno_TouchScreen::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 5,
+			"id" : "uno_lcd_registers::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 5,
 			"id" : "uno_LCDWIKI_GUI::@6890427a1f51a3e7e1df"
-		},
-		{
-			"backtrace" : 5,
-			"id" : "uno_mcu_8bit_magic::@6890427a1f51a3e7e1df"
-		},
-		{
-			"backtrace" : 5,
-			"id" : "uno_LCDWIKI_KBV::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "SimpleLCDTouchScreen::@6890427a1f51a3e7e1df",

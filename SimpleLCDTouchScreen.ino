@@ -1,3 +1,6 @@
+/*
+ * Library test file
+ */
 
 #include <Arduino.h>
 #include <LCDWIKI_KBV.h>
@@ -21,6 +24,7 @@ TouchScreenObject ts(8,A3,A2,9,300,320,480,3,924,111,58,935); // rx is the resis
 //Rectangle rectangle(50,50,400,200,Color(0,255,255),Color(255,200,0),label);
 //Rectangle rectangle2(410,30,470,300,Color(0,255,255),Color(255,200,0),label2);
 //RectangleButton rectangleBtn(100,50,400,200,Color(0,255,255),Color(255,200,0),label, ts);
+RectangleButton rboton(1,1,200,200,Color(0,0,255),Color(255,0,0),&ts);
 //RoundRectangle roundRectangle(50,100,400,250,20,Color(255,255,255),Color(0,255,40),label);
 //RoundRectangleButton roundRectangleBtn(50,100,400,250,20,Color(255,120,0),Color(0,255,40),&label,&ts);
 //Picture picture(30,50,"test.bmp");
@@ -44,9 +48,10 @@ void setup() {
   my_lcd.set_sd_cs(10);
   #endif
   my_lcd.Init_LCD();
-    my_lcd.Set_Rotation(1);
+    my_lcd.Set_Rotation(3);
+    ts.setRotation(3);
     my_lcd.Fill_Screen(0);
-    //my_lcd.Fill_Screen(Color(255,255,255).to565());
+    my_lcd.Fill_Screen(Color(255,255,255).to565());
     //my_lcd.Fill_Screen(Color(255,0,0).to565());
     //rectangleBtn
 /*
@@ -58,7 +63,7 @@ void setup() {
     Serial.println('\n');*/
 
     // picture.init();
-    char* patata = malloc(500*sizeof(byte));//6500
+    char* patata = (char*) malloc(500*sizeof(byte));//6500
     if(patata == NULL)
     Serial.println("Dale menos");
     unsigned long b4 = millis();
@@ -82,7 +87,7 @@ void setup() {
     my_lcd.draw(pictureButton);
     Serial.println(pictureButton.getx1());
     Serial.println(pictureButton.gety1());*/
-    //Serial.println(my_lcd.draw(picture));
+    Serial.println(my_lcd.draw(&picture));
 
     //my_lcd.show(line);
     //my_lcd.show(line2);
@@ -105,6 +110,15 @@ void loop()
         Serial.println("Boton pulsado");*/
     /*if(roundRectangleBtn.isPressed())
         Serial.println("Boton pulsado");*/
+    /*if(rboton.isPressed())
+    {
+        rboton.setSecondaryColor(Color(0,255,0));
+        my_lcd.draw(&rboton);
+        delay(100);
+        while (rboton.isPressed());
+        rboton.setSecondaryColor(Color(255,0,0));
+        my_lcd.draw(&rboton);
+    }*/
 }
 
 #ifdef __arm__
@@ -124,5 +138,3 @@ int freeMemory() {
   return __brkval ? &top - __brkval : &top - __malloc_heap_start;
 #endif  // __arm__
 }
-
- //*/ #include "SimpleLCDTouchScreen_test.cpp"
