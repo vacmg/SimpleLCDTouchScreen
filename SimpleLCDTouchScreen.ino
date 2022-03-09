@@ -10,11 +10,13 @@
 #include "Color.h"
 
 #define MEGA true
+#define ROTATION 3
 
 //circle, triangle, bitmap?
 
 SimpleLCDTouchScreen my_lcd(ST7796S, A3, A2, A1, A0, A4); //model,cs,cd,wr,rd,reset
-TouchScreenObject ts(8,A3,A2,9,300,320,480,3,924,111,58,935); // rx is the resistance between X+ and X- Use any multimeter to read it or leave it blanc
+//TouchScreenObject ts(8,A3,A2,9,300,320,480,3,924,111,58,935); // rx is the resistance between X+ and X- Use any multimeter to read it or leave it blanc
+TouchScreenObject ts(9,A2,A3,8,300,320,480,(ROTATION+1)%4,177,900,157,958); // for 3.5inch
 //TouchScreenObject ts(8,A3,A2,9,300,480,320,0,0,0,1023,1023); // rx is the resistance between X+ and X- Use any multimeter to read it or leave it blanc
 
 //Line line(93,68,93,68+2*8-2, Color(0,255,0));
@@ -30,7 +32,7 @@ RectangleButton rboton(1,1,200,200,Color(0,0,255),Color(255,0,0),&ts);
 //Picture picture(30,50,"test.bmp");
 //Picture picture(30,50,"05v2.bmp");
 //PictureButton pictureButton(150,50, "05v2.bmp",ts);
-Picture picture(14,44,"schArd.bmp");
+//Picture picture(14,44,"schArd.bmp");
 
 
 void setup() {
@@ -40,6 +42,7 @@ void setup() {
   //Serial.println(freeMemory());
   #if MEGA
   my_lcd.set_sd_cs(53);
+  
   pinMode(13,INPUT);
   pinMode(12,INPUT);
   pinMode(11,INPUT);
@@ -48,8 +51,8 @@ void setup() {
   my_lcd.set_sd_cs(10);
   #endif
   my_lcd.Init_LCD();
-    my_lcd.Set_Rotation(3);
-    ts.setRotation(3);
+    my_lcd.Set_Rotation(ROTATION);
+    //ts.setRotation(ROTATION);
     my_lcd.Fill_Screen(0);
     my_lcd.Fill_Screen(Color(255,255,255).to565());
     //my_lcd.Fill_Screen(Color(255,0,0).to565());
@@ -63,7 +66,7 @@ void setup() {
     Serial.println('\n');*/
 
     // picture.init();
-    char* patata = (char*) malloc(500*sizeof(byte));//6500
+    /*char* patata = (char*) malloc(500*sizeof(byte));//6500
     if(patata == NULL)
     Serial.println("Dale menos");
     unsigned long b4 = millis();
@@ -71,7 +74,7 @@ void setup() {
     unsigned long after = millis();
     Serial.println(after-b4);
     //my_lcd.Fill_Screen(Color(255,255,255).to565());
-    free(patata);
+    free(patata);*/
 
     my_lcd.draw(&rboton);
     
