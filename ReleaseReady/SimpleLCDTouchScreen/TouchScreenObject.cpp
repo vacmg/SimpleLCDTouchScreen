@@ -76,8 +76,15 @@ TSPoint TouchScreenObject::getPoint()
     TSPoint point = TouchScreen::getPoint();
     pinMode(xm, OUTPUT);
     pinMode(yp, OUTPUT);
-    point.x = map(point.x, CAL_LEFT, CAL_RIGHT, 0, DISPLAY_HEIGHT);
+
+    /*if(point.z>50)
+        Serial.print("raw:\tx:"+String(point.x)+";\ty:"+point.y+'\t');*/
+
+    point.x = map(point.x, CAL_LEFT, CAL_RIGHT, 0, DISPLAY_HEIGHT); // long map(long x, long in_min, long in_max, long out_min, long out_max)
     point.y = map(point.y, CAL_TOP, CAL_BOT, 0, DISPLAY_WIDTH);
+
+    /*if(point.z>50) //
+        Serial.print("noRotation:\tx:"+String(point.x)+";\ty:"+point.y+'\t');*/
 
     if (rotation == 1)
     {
@@ -90,12 +97,15 @@ TSPoint TouchScreenObject::getPoint()
         point.y = DISPLAY_WIDTH-point.y;
         point.x = DISPLAY_HEIGHT-point.x;
     }
-    else // rotation == 3
+    else if(rotation == 3)
     {
         int aux = point.x;
         point.x = DISPLAY_WIDTH-point.y;
         point.y = aux;
     }
+
+    /*if(point.z>50) // todo delete this
+    Serial.print("point:\tx:"+String(point.x)+";\ty:"+point.y+'\n'); // todo delete this*/
     return point;
 }
 

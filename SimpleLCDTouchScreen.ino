@@ -107,7 +107,7 @@ void loop()
     Serial.println(freeMemory());
     Serial.println(i);
     i++;*/
-    delay(10);
+    //delay(10);
     //rectangleBtn.isPressed();
     /*if(rectangleBtn.isPressed())
     Serial.println("Boton pulsado");
