@@ -26,13 +26,16 @@ TouchScreenObject ts(9,A2,A3,8,300,320,480,(ROTATION+1)%4,177,900,157,958); // f
 //Rectangle rectangle(50,50,400,200,Color(0,255,255),Color(255,200,0),label);
 //Rectangle rectangle2(410,30,470,300,Color(0,255,255),Color(255,200,0),label2);
 //RectangleButton rectangleBtn(100,50,400,200,Color(0,255,255),Color(255,200,0),label, ts);
-RectangleButton rboton(1,1,200,200,Color(0,0,255),Color(255,0,0),&ts);
+//RectangleButton rboton(1,1,200,200,Color(0,0,255),Color(255,0,0),&ts);
 //RoundRectangle roundRectangle(50,100,400,250,20,Color(255,255,255),Color(0,255,40),label);
 //RoundRectangleButton roundRectangleBtn(50,100,400,250,20,Color(255,120,0),Color(0,255,40),&label,&ts);
 //Picture picture(30,50,"test.bmp");
 //Picture picture(30,50,"05v2.bmp");
 //PictureButton pictureButton(150,50, "05v2.bmp",ts);
 //Picture picture(14,44,"schArd.bmp");
+Label label3(0,0,"No Debo Salir",1,Color(0));
+Rectangle rectangle3(0,0,1,1,Color(0),Color(240,240,240));
+TextBox textBox(20,20,460,300,"text.txt",&rectangle3,&label3,10);
 
 
 void setup() {
@@ -76,7 +79,7 @@ void setup() {
     //my_lcd.Fill_Screen(Color(255,255,255).to565());
     free(patata);*/
 
-    my_lcd.draw(&rboton);
+    //my_lcd.draw(&rboton);
     
     //my_lcd.draw(label);
     //my_lcd.draw(rectangle);
@@ -98,6 +101,10 @@ void setup() {
     //my_lcd.show(line2);
     
     //Serial.println(freeMemory());
+    textBox.print(&Serial);
+    Serial.println("Printing textBox");
+    my_lcd.draw(&textBox);
+
 }
 int i = 0;
 void loop() 
@@ -115,7 +122,7 @@ void loop()
         Serial.println("Boton pulsado");*/
     /*if(roundRectangleBtn.isPressed())
         Serial.println("Boton pulsado");*/
-    if(rboton.isPressed())
+    /*if(rboton.isPressed())
     {
         rboton.setSecondaryColor(Color(0,255,0));
         my_lcd.draw(&rboton);
@@ -123,7 +130,7 @@ void loop()
         while (rboton.isPressed());
         rboton.setSecondaryColor(Color(255,0,0));
         my_lcd.draw(&rboton);
-    }
+    }*/
 }
 
 #ifdef __arm__

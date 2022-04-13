@@ -10,29 +10,34 @@
 #include "RoundRectangle.h"
 
 #include "SD/src/SD.h" // todo remove this
+#include <SD.h>
 
-class TextBox: virtual public ScreenObjectWithXtraCoords, virtual public ScreenObjectWithSecondaryColor
+class TextBox: virtual public ScreenObject
 {
 public:
-    TextBox(int x, int y, int x1, int y1, char* textPath, uint32_t beginOffset, uint32_t endOffset, Rectangle* container, Color mainColor, Color secondaryColor);
-    TextBox(int x, int y, int x1, int y1, char* textPath, uint32_t offset, uint32_t endOffset, Rectangle* container, Color mainColor);
-    TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* container, Color mainColor, Color secondaryColor);
-    TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* container, Color mainColor);
+    TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label* label);
+    TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label* label, byte spacing);
+    TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label* label, uint32_t beginOffset, uint32_t endOffset);
+    TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label* label, byte spacing, uint32_t beginOffset, uint32_t endOffset);
 
-    TextBox(int x, int y, int x1, int y1, char* textPath, uint32_t offset, uint32_t endOffset, RoundRectangle* container, Color mainColor, Color secondaryColor);
-    TextBox(int x, int y, int x1, int y1, char* textPath, uint32_t offset, uint32_t endOffset, RoundRectangle* container, Color mainColor);
-    TextBox(int x, int y, int x1, int y1, char* textPath, RoundRectangle* container, Color mainColor, Color secondaryColor);
-    TextBox(int x, int y, int x1, int y1, char* textPath, RoundRectangle* container, Color mainColor);
-
+    void print(HardwareSerial* serial);
+    byte calculateFontSize();
+    bool getCanBePrinted();
+    byte getSpacing();
     byte getFontSize();
-
+    uint32_t getBeginOffset();
+    uint32_t getEndOffset();
+    Label* getLabel();
+    Rectangle* getFrame();
 private:
     char* textPath;
     uint32_t beginOffset;
     uint32_t endOffset;
-    Rectangle* Rcontainer;
-    RoundRectangle* RRcontainer;
-    static const byte spacing = 7;
+    byte spacing;
+    byte fontSize;
+    bool canBePrinted;
+    Label* label;
+    Rectangle* frame;
 
     uint16_t maxAmountOfLines(uint16_t ypx,byte font);
 };

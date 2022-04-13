@@ -93,7 +93,7 @@ bool SimpleLCDTouchScreen::draw(Picture* picture)
 
 bool SimpleLCDTouchScreen::draw(TextBox* textBox)
 {
-
+    draw(textBox->getFrame());
 }
 
 void SimpleLCDTouchScreen::Init_LCD()
