@@ -1,7 +1,6 @@
 #ifndef _SIMPLE_LCDTOUCH_SCREEN_H_
 #define _SIMPLE_LCDTOUCH_SCREEN_H_
 
-//#include <SD/src/SD.h> //todo remove this line
 #include <SD.h>
 #include "LCDWIKI_KBV.h"
 #include "LCDWIKI_GUI.h"

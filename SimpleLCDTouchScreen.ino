@@ -7,7 +7,6 @@
 #include <LCDWIKI_GUI.h>
 #include <TouchScreen.h>
 #include "SimpleLCDTouchScreen.h"
-#include "Color.h"
 
 #define MEGA true
 #define ROTATION 3
@@ -35,7 +34,7 @@ TouchScreenObject ts(9,A2,A3,8,300,320,480,(ROTATION+1)%4,177,900,157,958); // f
 //Picture picture(14,44,"schArd.bmp");
 Label label3(0,0,"No Debo Salir",1,Color(0));
 Rectangle rectangle3(0,0,1,1,Color(0),Color(240,240,240));
-TextBox textBox(20,20,460,300,"text.txt",&rectangle3,&label3,10);
+TextBox textBox(20,20,460,300,"test.txt",&rectangle3,&label3,10,2,30);
 
 
 void setup() {
@@ -102,7 +101,7 @@ void setup() {
     
     //Serial.println(freeMemory());
     textBox.print(&Serial);
-    Serial.println("Printing textBox");
+    textBox.printAll(&Serial);
     my_lcd.draw(&textBox);
 
 }
