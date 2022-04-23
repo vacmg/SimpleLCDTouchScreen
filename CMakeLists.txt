@@ -6,8 +6,8 @@ set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/cmake/ArduinoToolchain.cmake)
 set(CMAKE_CXX_STANDARD 11)
 set(PROJECT_NAME SimpleLCDTouchScreen)
 
-set(${PROJECT_NAME}_BOARD uno)
-# set(ARDUINO_CPU)
+set(${PROJECT_NAME}_BOARD mega)
+set(ARDUINO_CPU atmega2560)
 project(${PROJECT_NAME})
 
 # Define additional source and header files or default arduino sketch files
@@ -15,7 +15,7 @@ set(${PROJECT_NAME}_SRCS SimpleLCDTouchScreen.cpp SimpleLCDTouchScreen_test.cpp)
 set(${PROJECT_NAME}_HDRS SimpleLCDTouchScreen.h)
 
 ### Additional static libraries to include in the target.
-set(${PROJECT_NAME}_LIBS)
+# set(${PROJECT_NAME}_LIBS)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/)
 
 ### Main sketch file
@@ -42,7 +42,7 @@ set(_RECURSE true)
 #### Additional settings for programmer. From programmers.txt
 set(${PROJECT_NAME}_PROGRAMMER avrisp)
 set(${PROJECT_NAME}_PORT COM3)
-# set(uno.upload.speed 9600)
+# set(mega.upload.speed 9600)
 
 ## Verbose build process
 set(${PROJECT_NAME}_AFLAGS -v)
