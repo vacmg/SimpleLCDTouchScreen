@@ -9,7 +9,6 @@
 #include "Rectangle.h"
 #include "RoundRectangle.h"
 
-#include "SD/src/SD.h" // todo remove this
 #include <SD.h>
 
 class TextBox: virtual public ScreenObject
@@ -20,6 +19,7 @@ public:
     TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label* label, uint32_t beginOffset, uint32_t endOffset);
     TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label* label, byte spacing, uint32_t beginOffset, uint32_t endOffset);
 
+    void printAll(HardwareSerial* serial);
     void print(HardwareSerial* serial);
     byte calculateFontSize();
     bool getCanBePrinted();
@@ -30,12 +30,14 @@ public:
     Label* getLabel();
     Rectangle* getFrame();
 private:
+    bool checkIfFileExists();
     char* textPath;
     uint32_t beginOffset;
     uint32_t endOffset;
     byte spacing;
     byte fontSize;
     bool canBePrinted;
+    bool validFile;
     Label* label;
     Rectangle* frame;
 

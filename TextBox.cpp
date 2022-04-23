@@ -11,6 +11,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->beginOffset = beginOffset;
     this->endOffset = endOffset;
     this->fontSize = calculateFontSize();
+    this->validFile = checkIfFileExists();
     this->label = label;
     this->frame = frame;
 
@@ -25,6 +26,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->beginOffset = beginOffset;
     this->endOffset = endOffset;
     this->fontSize = calculateFontSize();
+    this->validFile = checkIfFileExists();
     this->label = label;
     this->frame = frame;
 
@@ -38,6 +40,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->spacing = spacing;
     this->beginOffset = 0;
     this->endOffset = 0;
+    this->validFile = checkIfFileExists();
     this->fontSize = calculateFontSize();
     this->label = label;
     this->frame = frame;
@@ -52,6 +55,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->spacing = 7;
     this->beginOffset = 0;
     this->endOffset = 0;
+    this->validFile = checkIfFileExists();
     this->fontSize = calculateFontSize();
     this->label = label;
     this->frame = frame;
@@ -62,17 +66,18 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
 
 byte TextBox::calculateFontSize()
 {
-    /*File file = SD.open(textPath, FILE_READ);
-    if(file)
+    if(validFile)
     {
+        File file = SD.open(textPath, FILE_READ);
         file.seek(beginOffset);
+
         if(endOffset==0) true; //TODO if endOffset is not set, use EOF position as offset
         uint32_t length = endOffset - beginOffset;
-        uint32_t xpx = getx1()-getx();
-        uint32_t ypx = gety1()-gety();
+        uint32_t xpx = frame->getx1()-frame->getx();
+        uint32_t ypx = frame->gety1()-frame->gety();
 
         uint16_t newLines; //todo sacar numero de intros
-        //todo comprobar length>0, xpx>0, ypx>0, spacing>0
+        //todo comprobar length>0, xpx>0, ypx>0, spacing>0 si error, file.close()
 
         canBePrinted = true;
         byte maxFontSize = (-5*length*spacing)+(5*newLines*spacing)-(7*newLines*xpx)+sqrt((49*pow(newLines,2)*pow(xpx,2))-(70*pow(newLines,2)*length*spacing*xpx)+(70*pow(newLines,2)*spacing*xpx)+(140*length*xpx*ypx)-(140*newLines*xpx*ypx)+(25*pow(length,2)*pow(spacing,2))-(50*newLines*length*pow(spacing,2))+(25*pow(newLines,2)*pow(spacing,2)))/(2*(35*length-35*newLines));
@@ -127,12 +132,32 @@ Rectangle *TextBox::getFrame()
 
 void TextBox::print(HardwareSerial* serial)
 {
-    serial->println(F("Printing stored text"));
-    File file = SD.open(textPath,FILE_READ);
-    file.
-    while (file.available())
+    if(validFile)
     {
-        serial->print(file.read());
+        File file = SD.open(textPath,FILE_READ);
+        file.seek(beginOffset);
+
+        while (file.available() && file.position()<endOffset)
+        {
+            serial->print((char)file.read());
+        }
+        file.close();
+        serial->println();
     }
-    serial->println(F("Done"));
+}
+
+void TextBox::printAll(HardwareSerial* serial)
+{
+    if(validFile)
+        print(serial);
+}
+
+bool TextBox::checkIfFileExists()
+{
+    File file = SD.open(textPath,FILE_READ);
+    bool res = file && !file.isDirectory(); // If the file exists, and it is not a directory...
+    file.seek(endOffset);
+    res &=file.available(); // ...and if file is at least as long as endOffset bytes
+    file.close();
+    return res;
 }
