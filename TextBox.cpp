@@ -148,8 +148,13 @@ void TextBox::print(HardwareSerial* serial)
 
 void TextBox::printAll(HardwareSerial* serial)
 {
-    if(validFile)
-        print(serial);
+    uint32_t bOffset = beginOffset;
+    uint32_t eOffset = endOffset;
+    beginOffset = 0;
+    endOffset = UINT32_MAX;
+    print(serial);
+    beginOffset = bOffset;
+    endOffset = eOffset;
 }
 
 bool TextBox::checkIfFileExists()
