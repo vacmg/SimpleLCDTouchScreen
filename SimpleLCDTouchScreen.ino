@@ -11,6 +11,24 @@
 #define MEGA true
 #define ROTATION 3
 
+#ifdef __arm__
+// should use uinstd.h to define sbrk but Due causes a conflict
+extern "C" char* sbrk(int incr);
+#else  // __ARM__
+extern char *__brkval;
+#endif  // __arm__
+
+int freeMemory() {
+    char top;
+#ifdef __arm__
+    return &top - reinterpret_cast<char*>(sbrk(0));
+#elif defined(CORE_TEENSY) || (ARDUINO > 103 && ARDUINO != 151)
+    return &top - __brkval;
+#else  // __arm__
+    return __brkval ? &top - __brkval : &top - __malloc_heap_start;
+#endif  // __arm__
+}
+
 //circle, triangle, bitmap?
 
 SimpleLCDTouchScreen my_lcd(ST7796S, A3, A2, A1, A0, A4); //model,cs,cd,wr,rd,reset
@@ -100,9 +118,11 @@ void setup() {
     //my_lcd.show(line2);
     
     //Serial.println(freeMemory());
-    textBox.print(&Serial);
+    //textBox.print(&Serial);
     textBox.printAll(&Serial);
+    Serial.println("\n");
     my_lcd.draw(&textBox);
+    textBox.test();
 
 }
 int i = 0;
@@ -130,22 +150,4 @@ void loop()
         rboton.setSecondaryColor(Color(255,0,0));
         my_lcd.draw(&rboton);
     }*/
-}
-
-#ifdef __arm__
-// should use uinstd.h to define sbrk but Due causes a conflict
-extern "C" char* sbrk(int incr);
-#else  // __ARM__
-extern char *__brkval;
-#endif  // __arm__
-
-int freeMemory() {
-  char top;
-#ifdef __arm__
-  return &top - reinterpret_cast<char*>(sbrk(0));
-#elif defined(CORE_TEENSY) || (ARDUINO > 103 && ARDUINO != 151)
-  return &top - __brkval;
-#else  // __arm__
-  return __brkval ? &top - __brkval : &top - __malloc_heap_start;
-#endif  // __arm__
 }

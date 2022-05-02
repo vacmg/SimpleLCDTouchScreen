@@ -11,7 +11,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->beginOffset = beginOffset;
     this->endOffset = endOffset;
     this->fontSize = calculateFontSize();
-    this->validFile = checkIfFileExists();
+    this->validFile = false;
     this->label = label;
     this->frame = frame;
 
@@ -26,7 +26,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->beginOffset = beginOffset;
     this->endOffset = endOffset;
     this->fontSize = calculateFontSize();
-    this->validFile = checkIfFileExists();
+    this->validFile = false;
     this->label = label;
     this->frame = frame;
 
@@ -40,7 +40,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->spacing = spacing;
     this->beginOffset = 0;
     this->endOffset = 0;
-    this->validFile = checkIfFileExists();
+    this->validFile = false;
     this->fontSize = calculateFontSize();
     this->label = label;
     this->frame = frame;
@@ -55,7 +55,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->spacing = 7;
     this->beginOffset = 0;
     this->endOffset = 0;
-    this->validFile = checkIfFileExists();
+    this->validFile = false;
     this->fontSize = calculateFontSize();
     this->label = label;
     this->frame = frame;
@@ -64,14 +64,40 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     frame->setCoords1(x1,y1);
 }
 
+char* nextWord(File* file, uint32_t start, uint32_t end, uint32_t* length) // This function separates a string in words like that: "I like\narduino" --> "I"+" "+"like"+"\n"+"arduino"
+{
+    file->seek(start);
+    while (file->available() && file->position()<end) // look for terminators
+    {
+        char character = (char)file->read();
+        if(character == ' ' || character == '\n')
+            end = file->position()-1;
+    }
+    char* word = (char*)malloc((end-start+1)* sizeof(char)); // WARNING: Dynamic allocation, be careful with memory leaks
+    if(word == NULL)
+        return NULL;
+
+    file->seek(start);
+    uint16_t i = 0;
+    while (file->available() && file->position()<end) // read word
+    {
+        word[i] = (char)file->read();
+        i++;
+    }
+    word[i] = '\0';
+    *length = i;
+    return word;
+}
+
 byte TextBox::calculateFontSize()
 {
-    if(validFile)
+    byte font = 0;
+    if(validFile || checkIfFileExists())
     {
         File file = SD.open(textPath, FILE_READ);
         file.seek(beginOffset);
 
-        if(endOffset==0) true; //TODO if endOffset is not set, use EOF position as offset
+        if(endOffset==0) endOffset=file.size();
         uint32_t length = endOffset - beginOffset;
         uint32_t xpx = frame->getx1()-frame->getx();
         uint32_t ypx = frame->gety1()-frame->gety();
@@ -82,17 +108,26 @@ byte TextBox::calculateFontSize()
         canBePrinted = true;
         byte maxFontSize = (-5*length*spacing)+(5*newLines*spacing)-(7*newLines*xpx)+sqrt((49*pow(newLines,2)*pow(xpx,2))-(70*pow(newLines,2)*length*spacing*xpx)+(70*pow(newLines,2)*spacing*xpx)+(140*length*xpx*ypx)-(140*newLines*xpx*ypx)+(25*pow(length,2)*pow(spacing,2))-(50*newLines*length*pow(spacing,2))+(25*pow(newLines,2)*pow(spacing,2)))/(2*(35*length-35*newLines));
 
-        for (byte font = maxFontSize-1; font>0; font--)
+
+        for (font = maxFontSize-1; font>0; font--)
         {
+            uint16_t maxChar = charactersPerRow(xpx, font);
+            uint16_t chars = 0;
+
             // todo prueba y error para colocar las palabras
         }
     }/**/
-    return 1;
+    return font;
 }
 
-uint16_t TextBox::maxAmountOfLines(uint16_t ypx, byte font)
+uint16_t TextBox::maxAmountOfRows(uint16_t ypx, byte font)
 {
     return ypx/((7*font)+spacing);
+}
+
+uint16_t TextBox::charactersPerRow(uint16_t xpx, byte font)
+{
+    return xpx/(5*font);
 }
 
 bool TextBox::getCanBePrinted()
@@ -130,11 +165,14 @@ Rectangle *TextBox::getFrame()
     return frame;
 }
 
-void TextBox::print(HardwareSerial* serial)
+bool TextBox::print(HardwareSerial* serial)
 {
-    if(validFile)
+    if(validFile || checkIfFileExists())
     {
         File file = SD.open(textPath,FILE_READ);
+        serial->print(F("Printing file: "));
+        serial->println(file.name());
+        serial->println();
         file.seek(beginOffset);
 
         while (file.available() && file.position()<endOffset)
@@ -144,17 +182,19 @@ void TextBox::print(HardwareSerial* serial)
         file.close();
         serial->println();
     }
+    return validFile;
 }
 
-void TextBox::printAll(HardwareSerial* serial)
+bool TextBox::printAll(HardwareSerial* serial)
 {
     uint32_t bOffset = beginOffset;
     uint32_t eOffset = endOffset;
     beginOffset = 0;
     endOffset = UINT32_MAX;
-    print(serial);
+    bool res = print(serial);
     beginOffset = bOffset;
     endOffset = eOffset;
+    return res;
 }
 
 bool TextBox::checkIfFileExists()
@@ -164,5 +204,28 @@ bool TextBox::checkIfFileExists()
     file.seek(endOffset);
     res &=file.available(); // ...and if file is at least as long as endOffset bytes
     file.close();
+    validFile = res;
     return res;
+}
+
+void TextBox::test() //TODO remove this function
+{
+    File file = SD.open(textPath,FILE_READ);
+    Serial.print(F("Using file: "));
+    Serial.println(file.name());
+    Serial.println();
+    uint32_t length;
+    uint32_t pos = 0;
+
+    Serial.println(nextWord(&file,pos,file.size(),&length));
+
+    Serial.println("\n\nNext scan:");
+    Serial.print(F("Using file: "));
+    Serial.println(file.name());
+    //Serial.println();
+
+    Serial.println(file.read()==' '?"Space delimiter":"\\n delimiter");
+
+    pos+=length+1;
+    Serial.print(nextWord(&file,pos,file.size(),&length));
 }

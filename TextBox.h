@@ -19,8 +19,8 @@ public:
     TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label* label, uint32_t beginOffset, uint32_t endOffset);
     TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label* label, byte spacing, uint32_t beginOffset, uint32_t endOffset);
 
-    void printAll(HardwareSerial* serial);
-    void print(HardwareSerial* serial);
+    bool printAll(HardwareSerial* serial);
+    bool print(HardwareSerial* serial);
     byte calculateFontSize();
     bool getCanBePrinted();
     byte getSpacing();
@@ -29,6 +29,8 @@ public:
     uint32_t getEndOffset();
     Label* getLabel();
     Rectangle* getFrame();
+
+    void test(); // todo remove this function
 private:
     bool checkIfFileExists();
     char* textPath;
@@ -41,7 +43,8 @@ private:
     Label* label;
     Rectangle* frame;
 
-    uint16_t maxAmountOfLines(uint16_t ypx,byte font);
+    uint16_t maxAmountOfRows(uint16_t ypx,byte font);
+    uint16_t charactersPerRow(uint16_t xpx, byte font);
 };
 
 
