@@ -103,20 +103,22 @@ byte TextBox::calculateFontSize()
         uint32_t ypx = frame->gety1()-frame->gety();
 
         uint16_t newLines; //todo sacar numero de intros
-        //todo comprobar length>0, xpx>0, ypx>0, spacing>0 si error, file.close()
-
-        canBePrinted = true;
-        byte maxFontSize = (-5*length*spacing)+(5*newLines*spacing)-(7*newLines*xpx)+sqrt((49*pow(newLines,2)*pow(xpx,2))-(70*pow(newLines,2)*length*spacing*xpx)+(70*pow(newLines,2)*spacing*xpx)+(140*length*xpx*ypx)-(140*newLines*xpx*ypx)+(25*pow(length,2)*pow(spacing,2))-(50*newLines*length*pow(spacing,2))+(25*pow(newLines,2)*pow(spacing,2)))/(2*(35*length-35*newLines));
-
-
-        for (font = maxFontSize-1; font>0; font--)
+        if(length>0 && xpx>0 && ypx>0 && spacing>0)
         {
-            uint16_t maxChar = charactersPerRow(xpx, font);
-            uint16_t chars = 0;
+            canBePrinted = true;
+            byte maxFontSize = (-5*length*spacing)+(5*newLines*spacing)-(7*newLines*xpx)+sqrt((49*pow(newLines,2)*pow(xpx,2))-(70*pow(newLines,2)*length*spacing*xpx)+(70*pow(newLines,2)*spacing*xpx)+(140*length*xpx*ypx)-(140*newLines*xpx*ypx)+(25*pow(length,2)*pow(spacing,2))-(50*newLines*length*pow(spacing,2))+(25*pow(newLines,2)*pow(spacing,2)))/(2*(35*length-35*newLines));
 
-            // todo prueba y error para colocar las palabras
+            for (font = maxFontSize-1; font>0; font--)
+            {
+                uint16_t maxChar = charactersPerRow(xpx, font);
+                uint16_t chars = 0;
+
+                // todo prueba y error para colocar las palabras
+            }
         }
-    }/**/
+        file.close();
+    }
+
     return font;
 }
 
