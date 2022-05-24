@@ -93,9 +93,89 @@ bool SimpleLCDTouchScreen::draw(Picture* picture)
     }
 }
 
+void pause() // TODO remove this
+{
+    while (Serial.available())
+    {
+        Serial.read();
+    }
+    while (!Serial.available());
+    while (Serial.available())
+    {
+        Serial.read();
+    }
+}
+
 bool SimpleLCDTouchScreen::draw(TextBox* textBox)
 {
+    if(!textBox->init() || textBox->getFontSize()==0)
+        return false;
     draw(textBox->getFrame());
+    uint32_t xpx = textBox->getx1()-textBox->getx();
+    uint32_t ypx = textBox->gety1()-textBox->gety();
+
+    uint8_t font = textBox->getFontSize();
+    textBox->getLabel()->setFontSize(font);
+    Serial.print("Font size: ");Serial.println(font);
+    uint16_t maxNumOfCharPerRow = textBox->charactersPerRow(xpx,font);
+    Serial.print("MaxNumOfCharsPerRow: ");Serial.println(maxNumOfCharPerRow);
+    uint16_t maxNumOfRows = textBox->maxAmountOfRows(ypx, font);
+    uint16_t row = 0;
+    uint16_t pos = textBox->getBeginOffset();
+    uint32_t wordSize;
+    File file = SD.open(textBox->getTextPath(), FILE_READ);
+
+    char* nxWord = textBox->nextWord(&file,pos,textBox->getEndOffset(),&wordSize);
+    while (nxWord!= nullptr && row<maxNumOfRows) // For each line until the paragraph is read or numOfRows is exceeded
+    {
+        uint16_t charsReadInARow = 0;
+        bool maxCharPerLineExceeded = false;
+        char* line = (char*) calloc(maxNumOfCharPerRow, sizeof(char));
+        while (nxWord!= nullptr && !maxCharPerLineExceeded) // For each word until the line is full or a \n is read
+        {
+            Serial.print("charsAvailable: ");Serial.println(maxNumOfCharPerRow-charsReadInARow);
+            Serial.print("charsToAppend: ");Serial.println((wordSize+1));
+
+            if(maxNumOfCharPerRow-charsReadInARow<(wordSize+1)) // If there is no enough free space // todo there is a bug with free space recognicion
+            {
+                Serial.println("NO");
+                maxCharPerLineExceeded = true; // end line
+            }
+            else // If there is enough free space
+            {
+                Serial.println("OK");
+                strcat(line,nxWord); // Add the word to the line
+                charsReadInARow+=(wordSize+1); // wordSize + delimiter (1 char)
+                free(nxWord); // Free old pointer once it has been appended to the line
+
+                char terminator[2] = "";
+                terminator[0] = (char)file.read(); // get the delimiter as a string
+                terminator[1] = NULL;
+                if(terminator[0] == '\n') // If the delimiter is a \n, end line
+                    maxCharPerLineExceeded = true;
+                else
+                    strcat(line,terminator); // If the delimiter is a space, add it to the line
+                pos+=wordSize+1; // Move forward text pointer
+                pause();
+                nxWord = textBox->nextWord(&file,pos,textBox->getEndOffset(),&wordSize); // read next word
+            }
+        }
+        Label* label = textBox->getLabel();
+        label->setString(line); // set the string to draw
+        label->setCoords(textBox->getx()+textBox->getSpacing(),(int)(textBox->gety()+textBox->getSpacing()+((7*font)+textBox->getSpacing())*row)); // set the coords where to draw the string
+        draw(label);
+        free(line); // free line string after using it
+        row++;
+        Serial.println("\n");
+    }
+    file.close();
+    if(nxWord!= nullptr)
+    {
+        return false;
+    }
+    Serial.print("Successfully drawn the text with a font of ");Serial.println(font);
+    return true;
+
 }
 
 void SimpleLCDTouchScreen::Init_LCD()

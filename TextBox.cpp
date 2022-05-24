@@ -4,7 +4,7 @@
 
 #include "TextBox.h"
 
-TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label *label, byte spacing, uint32_t beginOffset, uint32_t endOffset): ScreenObject(x,y,Color())
+TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label *label, byte spacing, uint32_t beginOffset, uint32_t endOffset): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color())
 {
     this->textPath = textPath;
     this->spacing = spacing;
@@ -14,12 +14,9 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->validFile = false;
     this->label = label;
     this->frame = frame;
-
-    frame->setCoords(x,y);
-    frame->setCoords1(x1,y1);
 }
 
-TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label *label, uint32_t beginOffset, uint32_t endOffset): ScreenObject(x,y,Color())
+TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label *label, uint32_t beginOffset, uint32_t endOffset): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color())
 {
     this->textPath = textPath;
     this->spacing = 7;
@@ -29,12 +26,9 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->validFile = false;
     this->label = label;
     this->frame = frame;
-
-    frame->setCoords(x,y);
-    frame->setCoords1(x1,y1);
 }
 
-TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label *label, byte spacing): ScreenObject(x,y,Color())
+TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label *label, byte spacing): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color())
 {
     this->textPath = textPath;
     this->spacing = spacing;
@@ -44,12 +38,9 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->fontSize = 0;
     this->label = label;
     this->frame = frame;
-
-    frame->setCoords(x,y);
-    frame->setCoords1(x1,y1);
 }
 
-TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label *label): ScreenObject(x,y,Color())
+TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame, Label *label): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color())
 {
     this->textPath = textPath;
     this->spacing = 7;
@@ -59,9 +50,6 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->fontSize = 0;
     this->label = label;
     this->frame = frame;
-
-    frame->setCoords(x,y);
-    frame->setCoords1(x1,y1);
 }
 
 /*
@@ -110,9 +98,7 @@ byte TextBox::calculateFontSize()
     }
     uint8_t font = 0;
     File file = SD.open(textPath, FILE_READ);
-    file.seek(beginOffset);
 
-    if(endOffset==0) endOffset=file.size();
     uint32_t length = endOffset - beginOffset;
     uint32_t xpx = frame->getx1()-frame->getx();
     uint32_t ypx = frame->gety1()-frame->gety();
@@ -125,29 +111,29 @@ byte TextBox::calculateFontSize()
         for (font = maxFontSize; font>0 && !fontFound; font--) // For each font from maxFontSize to one
         {
             uint16_t maxNumOfCharPerRow = charactersPerRow(xpx, font);
-            uint16_t maxNumOfRows = maxAmountOfRows(xpx, font);
+            uint16_t maxNumOfRows = maxAmountOfRows(ypx, font);
             uint16_t row = 0;
             uint16_t pos = beginOffset;
             uint32_t wordSize;
             char* nxWord = nextWord(&file,pos,endOffset,&wordSize);
-            while (nxWord!= nullptr && row<maxNumOfRows) // For each line until the paragraph is read or size is exceeded
+            while (nxWord!= nullptr && row<maxNumOfRows) // For each line until the paragraph is read or numOfRows is exceeded
             {
-                uint16_t charsReadedInARow = 0;
+                uint16_t charsReadInARow = 0;
                 bool maxCharPerLineExceeded = false;
                 while (nxWord!= nullptr && !maxCharPerLineExceeded) // For each word until the line is full or a \n is read
                 {
-                    if(maxNumOfCharPerRow-charsReadedInARow<(wordSize+1)) // If there is no enough free space
+                    if(maxNumOfCharPerRow-charsReadInARow<(wordSize+1)) // If there is no enough free space
                     {
                         maxCharPerLineExceeded = true; // end line
                     }
                     else // If there is enough free space
                     {
                         pos+=wordSize+1; // Move forward text pointer
-                        charsReadedInARow+=(wordSize+1); // Add the word to the line // wordSize + delimiter (1 char)
+                        charsReadInARow+=(wordSize+1); // Add the word to the line // wordSize + delimiter (1 char)
                         free(nxWord);
                         if(file.read() == '\n') // If the delimiter is a \n, end line
                             maxCharPerLineExceeded = true;
-                        nxWord = nextWord(&file,pos,endOffset,&wordSize);
+                        nxWord = nextWord(&file,pos,endOffset,&wordSize); // read next word
                     }
                 }
                 row++;
@@ -177,7 +163,7 @@ uint16_t TextBox::maxAmountOfRows(uint16_t ypx, byte font)
 
 uint16_t TextBox::charactersPerRow(uint16_t xpx, byte font)
 {
-    return xpx/(5*font);
+    return (xpx-2*spacing)/(5*font);
 }
 
 byte TextBox::getSpacing()
@@ -187,7 +173,7 @@ byte TextBox::getSpacing()
 
 byte TextBox::getFontSize()
 {
-    return fontSize;
+    return fontSize==0?calculateFontSize():fontSize;
 }
 
 uint32_t TextBox::getBeginOffset()
@@ -210,9 +196,14 @@ Rectangle *TextBox::getFrame()
     return frame;
 }
 
-bool TextBox::canBeDrawed()
+char *TextBox::getTextPath()
 {
-    return fontSize>0 || calculateFontSize()>0;
+    return textPath;
+}
+
+bool TextBox::canBeDrawn()
+{
+    return getFontSize()>0;
 }
 
 bool TextBox::print(HardwareSerial* serial)
@@ -251,7 +242,11 @@ bool TextBox::printAll(HardwareSerial* serial)
 bool TextBox::init()
 {
     if(!validFile)
+    {
         checkIfFileExists();
+        frame->setCoords(getx(),gety());
+        frame->setCoords1(getx1(),gety1());
+    }
     return validFile;
 }
 
@@ -276,32 +271,10 @@ bool TextBox::checkIfFileExists()
         return false;
     }
     file.seek(endOffset);
-    if(!file.available()) // ...and if file is at least as long as endOffset (otherwise set endOffset to last position of the file)
+    if(!file.available() || endOffset == 0) // ...and if file is at least as long as endOffset or its set to auto (otherwise set endOffset to last position of the file)
     {
         endOffset = file.size();
     }
     validFile = true;
     return true;
-}
-
-void TextBox::test() //TODO remove this function
-{
-    File file = SD.open(textPath,FILE_READ);
-    Serial.print(F("Using file: "));
-    Serial.println(file.name());
-    Serial.println();
-    uint32_t length;
-    uint32_t pos = 0;
-
-    Serial.println(nextWord(&file,pos,file.size(),&length));
-
-    Serial.println("\n\nNext scan:");
-    Serial.print(F("Using file: "));
-    Serial.println(file.name());
-    //Serial.println();
-
-    Serial.println(file.read()==' '?"Space delimiter":"\\n delimiter");
-
-    pos+=length+1;
-    Serial.print(nextWord(&file,pos,/*file.size()*/ pos+3,&length));
 }
