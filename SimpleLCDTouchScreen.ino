@@ -50,9 +50,10 @@ TouchScreenObject ts(9,A2,A3,8,300,320,480,(ROTATION+1)%4,177,900,157,958); // f
 //Picture picture(30,50,"05v2.bmp");
 //PictureButton pictureButton(150,50, "05v2.bmp",ts);
 //Picture picture(14,44,"schArd.bmp");
-Label label3(0,0,"No Debo Salir",1,Color(0));
+Label label3(0,0,"8",50,Color(0));
 Rectangle rectangle3(0,0,1,1,Color(0),Color(240,240,240));
-TextBox textBox(20,20,460,300,"test.txt",&rectangle3,&label3,10,2,30);
+TextBox textBox(20,20,460,300,"test.txt",&rectangle3,&label3,10,2,300);
+//Rectangle rectangle4(20,20,460,300,Color(0),Color(240,240,240),&label3,true);
 
 
 void setup() {
@@ -118,11 +119,18 @@ void setup() {
     //my_lcd.show(line2);
     
     //Serial.println(freeMemory());
-    //textBox.print(&Serial);
-    textBox.printAll(&Serial);
+
+    //textBox.printAll(&Serial);
+    //Serial.println("\n");
+    textBox.print(&Serial);
     Serial.println("\n");
     my_lcd.draw(&textBox);
-    textBox.test();
+    //textBox.test();
+
+    long prevmillis = millis();
+    Serial.println("\n"+textBox.calculateFontSize());
+    Serial.println(millis()-prevmillis);
+    //my_lcd.draw(&rectangle4);
 
 }
 int i = 0;

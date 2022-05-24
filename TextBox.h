@@ -22,9 +22,9 @@ public:
     bool printAll(HardwareSerial* serial);
     bool print(HardwareSerial* serial);
     byte calculateFontSize();
-    bool getCanBePrinted();
     byte getSpacing();
     byte getFontSize();
+    bool canBeDrawed();
     uint32_t getBeginOffset();
     uint32_t getEndOffset();
     Label* getLabel();
@@ -32,13 +32,14 @@ public:
 
     void test(); // todo remove this function
 private:
+    bool init();
+    char* nextWord(File* file, uint32_t start, uint32_t end, uint32_t* length);
     bool checkIfFileExists();
     char* textPath;
     uint32_t beginOffset;
     uint32_t endOffset;
     byte spacing;
-    byte fontSize;
-    bool canBePrinted;
+    byte fontSize; // 0 if invalid
     bool validFile;
     Label* label;
     Rectangle* frame;

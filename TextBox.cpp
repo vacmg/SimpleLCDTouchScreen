@@ -10,7 +10,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->spacing = spacing;
     this->beginOffset = beginOffset;
     this->endOffset = endOffset;
-    this->fontSize = calculateFontSize();
+    this->fontSize = 0;
     this->validFile = false;
     this->label = label;
     this->frame = frame;
@@ -25,7 +25,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->spacing = 7;
     this->beginOffset = beginOffset;
     this->endOffset = endOffset;
-    this->fontSize = calculateFontSize();
+    this->fontSize = 0;
     this->validFile = false;
     this->label = label;
     this->frame = frame;
@@ -41,7 +41,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->beginOffset = 0;
     this->endOffset = 0;
     this->validFile = false;
-    this->fontSize = calculateFontSize();
+    this->fontSize = 0;
     this->label = label;
     this->frame = frame;
 
@@ -56,7 +56,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     this->beginOffset = 0;
     this->endOffset = 0;
     this->validFile = false;
-    this->fontSize = calculateFontSize();
+    this->fontSize = 0;
     this->label = label;
     this->frame = frame;
 
@@ -64,18 +64,30 @@ TextBox::TextBox(int x, int y, int x1, int y1, char* textPath, Rectangle* frame,
     frame->setCoords1(x1,y1);
 }
 
-char* nextWord(File* file, uint32_t start, uint32_t end, uint32_t* length) // This function separates a string in words like that: "I like\narduino" --> "I"+" "+"like"+"\n"+"arduino"
+/*
+ * This function separates a string based on space ' ' or new line '\n' delimiters and returns the first word between start and a delimiter
+ * This function separates a string in words like that: "I like\narduino" --> "I"+" "+"like"+"\n"+"arduino"
+ * If the end position is reached before the end of a word, it returns nullptr
+ */
+char* TextBox::nextWord(File* file, uint32_t start, uint32_t end, uint32_t* length)
 {
+    if(!init())
+        return nullptr;
     file->seek(start);
     while (file->available() && file->position()<end) // look for terminators
     {
         char character = (char)file->read();
         if(character == ' ' || character == '\n')
             end = file->position()-1;
+        else if(file->position()==end)
+            return nullptr;
     }
+    if(!file->available())
+        return nullptr;
+
     char* word = (char*)malloc((end-start+1)* sizeof(char)); // WARNING: Dynamic allocation, be careful with memory leaks
-    if(word == NULL)
-        return NULL;
+    if(word == nullptr)
+        return nullptr;
 
     file->seek(start);
     uint16_t i = 0;
@@ -91,34 +103,71 @@ char* nextWord(File* file, uint32_t start, uint32_t end, uint32_t* length) // Th
 
 byte TextBox::calculateFontSize()
 {
-    byte font = 0;
-    if(validFile || checkIfFileExists())
+    if(!init())
     {
-        File file = SD.open(textPath, FILE_READ);
-        file.seek(beginOffset);
+        fontSize = 0;
+        return 0;
+    }
+    uint8_t font = 0;
+    //validFile = true; // todo remove this
+    File file = SD.open(textPath, FILE_READ);
+    file.seek(beginOffset);
 
-        if(endOffset==0) endOffset=file.size();
-        uint32_t length = endOffset - beginOffset;
-        uint32_t xpx = frame->getx1()-frame->getx();
-        uint32_t ypx = frame->gety1()-frame->gety();
+    if(endOffset==0) endOffset=file.size();
+    uint32_t length = endOffset - beginOffset;
+    uint32_t xpx = frame->getx1()-frame->getx();
+    uint32_t ypx = frame->gety1()-frame->gety();
 
-        uint16_t newLines; //todo sacar numero de intros
-        if(length>0 && xpx>0 && ypx>0 && spacing>0)
+    if(length>0 && xpx>0 && ypx>0 && spacing>0)
+    {
+        uint8_t maxFontSize = 50; // An arbitrary big enough value to ensure the biggest font available is selected (during our tests we found it's quicker to loop 40 times (loops are almost instantaneous until font = 6)
+                               // than to solve the equation that gives the maximum font size in ideal conditions (after getting that value, at least 1 loop is needed to adjust the final result)
+        bool fontFound = false;
+        for (font = maxFontSize; font>0 && !fontFound; font--) // For each font from maxFontSize to one
         {
-            canBePrinted = true;
-            byte maxFontSize = (-5*length*spacing)+(5*newLines*spacing)-(7*newLines*xpx)+sqrt((49*pow(newLines,2)*pow(xpx,2))-(70*pow(newLines,2)*length*spacing*xpx)+(70*pow(newLines,2)*spacing*xpx)+(140*length*xpx*ypx)-(140*newLines*xpx*ypx)+(25*pow(length,2)*pow(spacing,2))-(50*newLines*length*pow(spacing,2))+(25*pow(newLines,2)*pow(spacing,2)))/(2*(35*length-35*newLines));
-
-            for (font = maxFontSize-1; font>0; font--)
+            uint16_t maxNumOfCharPerRow = charactersPerRow(xpx, font);
+            uint16_t maxNumOfRows = maxAmountOfRows(xpx, font);
+            uint16_t row = 0;
+            uint16_t pos = beginOffset;
+            uint32_t wordSize;
+            char* nxWord = nextWord(&file,pos,endOffset,&wordSize);
+            while (nxWord!= nullptr && row<maxNumOfRows) // For each line until the paragraph is read or size is exceeded
             {
-                uint16_t maxChar = charactersPerRow(xpx, font);
-                uint16_t chars = 0;
+                uint16_t charsReadedInARow = 0;
+                bool maxCharPerLineExceeded = false;
+                while (nxWord!= nullptr && !maxCharPerLineExceeded) // For each word until the line is full or a \n is read
+                {
+                    if(maxNumOfCharPerRow-charsReadedInARow<(wordSize+1)) // If there is no enough free space
+                    {
+                        maxCharPerLineExceeded = true; // end line
+                    }
+                    else // If there is enough free space
+                    {
+                        pos+=wordSize+1; // Move forward text pointer
+                        charsReadedInARow+=(wordSize+1); // Add the word to the line // wordSize + delimiter (1 char)
+                        free(nxWord);
+                        if(file.read() == '\n') // If the delimiter is a \n, end line
+                            maxCharPerLineExceeded = true;
+                        nxWord = nextWord(&file,pos,endOffset,&wordSize);
+                    }
+                }
+                row++;
+            }
 
-                // todo prueba y error para colocar las palabras
+            if(nxWord == nullptr) // If nextWord is nullptr, it must have reached the end of the paragraph
+            {
+                fontFound = true;
+            }
+            else // If it is not nullptr, free the pointer to avoid memory leaks
+            {
+                free(nxWord);
             }
         }
-        file.close();
+        font++; // Compensate font-- of for loop
     }
-
+    file.close();
+    if(font > 0)
+        fontSize = 0;
     return font;
 }
 
@@ -130,11 +179,6 @@ uint16_t TextBox::maxAmountOfRows(uint16_t ypx, byte font)
 uint16_t TextBox::charactersPerRow(uint16_t xpx, byte font)
 {
     return xpx/(5*font);
-}
-
-bool TextBox::getCanBePrinted()
-{
-    return canBePrinted;
 }
 
 byte TextBox::getSpacing()
@@ -167,28 +211,34 @@ Rectangle *TextBox::getFrame()
     return frame;
 }
 
+bool TextBox::canBeDrawed()
+{
+    return fontSize>0 || calculateFontSize()>0;
+}
+
 bool TextBox::print(HardwareSerial* serial)
 {
-    if(validFile || checkIfFileExists())
-    {
-        File file = SD.open(textPath,FILE_READ);
-        serial->print(F("Printing file: "));
-        serial->println(file.name());
-        serial->println();
-        file.seek(beginOffset);
+    if(!init())
+        return false;
+    File file = SD.open(textPath,FILE_READ);
+    serial->print(F("Printing file: "));
+    serial->println(file.name());
+    serial->println();
+    file.seek(beginOffset);
 
-        while (file.available() && file.position()<endOffset)
-        {
-            serial->print((char)file.read());
-        }
-        file.close();
-        serial->println();
+    while (file.available() && file.position()<endOffset)
+    {
+        serial->print((char)file.read());
     }
+    file.close();
+    serial->println();
     return validFile;
 }
 
 bool TextBox::printAll(HardwareSerial* serial)
 {
+    if(!init())
+        return false;
     uint32_t bOffset = beginOffset;
     uint32_t eOffset = endOffset;
     beginOffset = 0;
@@ -199,15 +249,40 @@ bool TextBox::printAll(HardwareSerial* serial)
     return res;
 }
 
+bool TextBox::init()
+{
+    if(!validFile)
+        checkIfFileExists();
+    return validFile;
+}
+
 bool TextBox::checkIfFileExists()
 {
+    validFile = false;
     File file = SD.open(textPath,FILE_READ);
-    bool res = file && !file.isDirectory(); // If the file exists, and it is not a directory...
+    if(!file)
+    {
+        file.close();
+        return false;
+    }
+    if(file.isDirectory()) // If the file exists, and it is not a directory...
+    {
+        file.close();
+        return false;
+    }
+    file.seek(beginOffset);
+    if(!file.available()) // ...and if file is at least as long as startOffset (otherwise cancel)
+    {
+        file.close();
+        return false;
+    }
     file.seek(endOffset);
-    res &=file.available(); // ...and if file is at least as long as endOffset bytes
-    file.close();
-    validFile = res;
-    return res;
+    if(!file.available()) // ...and if file is at least as long as endOffset (otherwise set endOffset to last position of the file)
+    {
+        endOffset = file.size();
+    }
+    validFile = true;
+    return true;
 }
 
 void TextBox::test() //TODO remove this function
@@ -229,5 +304,5 @@ void TextBox::test() //TODO remove this function
     Serial.println(file.read()==' '?"Space delimiter":"\\n delimiter");
 
     pos+=length+1;
-    Serial.print(nextWord(&file,pos,file.size(),&length));
+    Serial.print(nextWord(&file,pos,/*file.size()*/ pos+3,&length));
 }
