@@ -109,7 +109,6 @@ byte TextBox::calculateFontSize()
         return 0;
     }
     uint8_t font = 0;
-    //validFile = true; // todo remove this
     File file = SD.open(textPath, FILE_READ);
     file.seek(beginOffset);
 
