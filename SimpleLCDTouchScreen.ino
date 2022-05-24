@@ -52,9 +52,8 @@ TouchScreenObject ts(9,A2,A3,8,300,320,480,(ROTATION+1)%4,177,900,157,958); // f
 //Picture picture(14,44,"schArd.bmp");
 Label label3(0,0,"8",50,Color(0));
 Rectangle rectangle3(0,0,1,1,Color(0),Color(240,240,240));
-TextBox textBox(20,20,460,300,"test.txt",&rectangle3,&label3,10,2,300); // todo check if there is a bug with spacing (15)
+TextBox textBox(20,20,460,300,"test.txt",10,&rectangle3,&label3,0,39);
 //Rectangle rectangle4(20,20,460,300,Color(0),Color(240,240,240),&label3,true);
-
 
 void setup() {
   Serial.begin(115200);
