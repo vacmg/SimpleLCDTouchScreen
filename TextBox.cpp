@@ -276,6 +276,17 @@ bool TextBox::canBeDrawn()
     return getFontSize()>0;
 }
 
+void TextBox::setCoords(int x, int y)
+{
+    frame->setCoords(x,y);
+    ScreenObjectWithXtraCoords::setCoords(x,y);
+}
+void TextBox::setCoords1(int x1, int y1)
+{
+    frame->setCoords1(x1,y1);
+    ScreenObjectWithXtraCoords::setCoords1(x1,y1);
+}
+
 bool TextBox::print(HardwareSerial* serial)
 {
     if(!init())

@@ -80,14 +80,14 @@ bool SimpleLCDTouchScreen::draw(Picture* picture)
         }
         else
         {
-            Label label(picture->getx(),picture->gety(),"Failure decoding .bmp",2,Color(255,255,255),Color(255,0,0));
+            Label label(picture->getx(),picture->gety(),String(F("Failure decoding .bmp")),2,Color(255,255,255),Color(255,0,0));
             draw(&label);
             return false;
         }
     }
     else
     {
-        Label label(picture->getx(),picture->gety(),"Failure starting the SD card",2,Color(255,255,255),Color(255,0,0));
+        Label label(picture->getx(),picture->gety(),String(F("Failure starting the SD card")).c_str(),2,Color(255,255,255),Color(255,0,0));
         draw(&label);
         return false;
     }
@@ -95,8 +95,12 @@ bool SimpleLCDTouchScreen::draw(Picture* picture)
 
 bool SimpleLCDTouchScreen::draw(TextBox* textBox)
 {
-    if(!textBox->init() || textBox->getFontSize()==0)
+    if(!textBox->init() || !textBox->canBeDrawn())
+    {
+        Label label(textBox->getx(),textBox->gety(),String(F("Text does not fit or file is corrupted")).c_str(),2,Color(255,255,255),Color(255,0,0));
+        draw(&label);
         return false;
+    }
     draw(textBox->getFrame());
     uint32_t xpx = textBox->getx1()-textBox->getx();
     uint32_t ypx = textBox->gety1()-textBox->gety();

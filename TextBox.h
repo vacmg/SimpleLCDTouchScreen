@@ -34,6 +34,8 @@ public:
     void setSpacing(uint16_t spacing);
     void setMarginX(uint16_t marginX);
     void setMarginY(uint16_t marginY);
+    void setCoords(int x, int y);
+    void setCoords1(int x1, int y1);
     uint8_t getFontSize();
     bool canBeDrawn();
     uint32_t getBeginOffset();
