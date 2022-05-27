@@ -187,8 +187,6 @@ uint8_t TextBox::calculateFontSize()
         font++; // Compensate font-- of for loop
     }
     file.close();
-    if(font > 0)
-        fontSize = 0;
     fontSize = font;
     return font;
 }
