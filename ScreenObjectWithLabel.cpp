@@ -30,7 +30,7 @@ ScreenObjectWithLabel::ScreenObjectWithLabel(int x, int y, Color mainColor):Scre
     this->disableAutoSize = false;
 }
 
-ScreenObjectWithLabel::ScreenObjectWithLabel()
+ScreenObjectWithLabel::ScreenObjectWithLabel():ScreenObject(0, 0, Color())
 {
     this->label = nullptr;
     this->validLabel = false;
@@ -51,12 +51,7 @@ bool ScreenObjectWithLabel::isAValidLabel()
 void ScreenObjectWithLabel::setLabel(Label* label)
 {
     this->label = label;
-    validLabel = true;
-}
-
-void ScreenObjectWithLabel::disableLabel()
-{
-    validLabel = false;
+    validLabel = label != nullptr;
 }
 
 // This function dynamically set rectangle's label position and font size

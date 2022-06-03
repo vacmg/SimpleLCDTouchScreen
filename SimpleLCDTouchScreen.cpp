@@ -15,6 +15,8 @@ SimpleLCDTouchScreen::SimpleLCDTouchScreen(uint16_t model, uint8_t cs, uint8_t c
 
 bool SimpleLCDTouchScreen::draw(Line* line)
 {
+    if(line == nullptr)
+        return false;
     Set_Draw_color(line->getMainColor().to565());
     Draw_Line(line->getx(),line->gety(),line->getx1(),line->gety1());
     return true;
@@ -22,6 +24,8 @@ bool SimpleLCDTouchScreen::draw(Line* line)
 
 bool SimpleLCDTouchScreen::draw(Label* label)
 {
+    if(label == nullptr)
+        return false;
     Set_Text_colour(label->getMainColor().to565());
     if (label->isAValidSecondaryColor())
     {
@@ -37,6 +41,8 @@ bool SimpleLCDTouchScreen::draw(Label* label)
 
 bool SimpleLCDTouchScreen::draw(Rectangle* rectangle)
 {
+    if(rectangle == nullptr)
+        return false;
     if(rectangle->isAValidSecondaryColor())
     {
         Set_Draw_color(rectangle->getSecondaryColor().to565());
@@ -54,6 +60,8 @@ bool SimpleLCDTouchScreen::draw(Rectangle* rectangle)
 
 bool SimpleLCDTouchScreen::draw(RoundRectangle* roundRectangle)
 {
+    if(roundRectangle == nullptr)
+        return false;
     if(roundRectangle->isAValidSecondaryColor())
     {
         Set_Draw_color(roundRectangle->getSecondaryColor().to565());
@@ -71,6 +79,8 @@ bool SimpleLCDTouchScreen::draw(RoundRectangle* roundRectangle)
 
 bool SimpleLCDTouchScreen::draw(Picture* picture)
 {
+    if(picture == nullptr)
+        return false;
     if(isSDReady)
     {
         File file = SD.open(picture->getPicturePath(),FILE_READ);
@@ -95,18 +105,24 @@ bool SimpleLCDTouchScreen::draw(Picture* picture)
 
 bool SimpleLCDTouchScreen::draw(TextBox* textBox)
 {
+    if(textBox == nullptr)
+        return false;
     if(!textBox->init() || !textBox->canBeDrawn())
     {
         Label label(textBox->getx(),textBox->gety(),String(F("Text does not fit or file is corrupted")).c_str(),2,Color(255,255,255),Color(255,0,0));
         draw(&label);
         return false;
     }
-    draw(textBox->getFrame());
+    if(textBox->isAValidRectangle())
+        draw(textBox->getFrame());
+
     uint32_t xpx = textBox->getx1()-textBox->getx();
     uint32_t ypx = textBox->gety1()-textBox->gety();
-    //TODO remove this
-    Rectangle realRectangle(textBox->getx()+textBox->getMarginX(),textBox->gety()+textBox->getMarginY(),textBox->getx1()-textBox->getMarginX(),textBox->gety1()-textBox->getMarginY(), Color(255,0,0));
-    draw(&realRectangle);
+
+    //TODO BEGIN remove this
+        Rectangle realRectangle(textBox->getx()+textBox->getMarginX(),textBox->gety()+textBox->getMarginY(),textBox->getx1()-textBox->getMarginX(),textBox->gety1()-textBox->getMarginY(), Color(255,0,0));
+        draw(&realRectangle);
+    //TODO END remove this
 
     uint8_t font = textBox->getFontSize();
     textBox->getLabel()->setFontSize(font);
