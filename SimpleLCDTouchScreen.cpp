@@ -119,10 +119,10 @@ bool SimpleLCDTouchScreen::draw(TextBox* textBox)
     uint32_t xpx = textBox->getx1()-textBox->getx();
     uint32_t ypx = textBox->gety1()-textBox->gety();
 
-    //TODO BEGIN remove this
+    /*//TODO BEGIN remove this
         Rectangle realRectangle(textBox->getx()+textBox->getMarginX(),textBox->gety()+textBox->getMarginY(),textBox->getx1()-textBox->getMarginX(),textBox->gety1()-textBox->getMarginY(), Color(255,0,0));
         draw(&realRectangle);
-    //TODO END remove this
+    //TODO END remove this*/
 
     uint8_t font = textBox->getFontSize();
     textBox->getLabel()->setFontSize(font);
