@@ -14,6 +14,7 @@ RoundRectangle   KEYWORD1
 RoundRectangleButton KEYWORD1
 Picture KEYWORD1
 PictureButton KEYWORD1
+TextBox KEYWORD1
 
 Color   KEYWORD1
 #######################################
