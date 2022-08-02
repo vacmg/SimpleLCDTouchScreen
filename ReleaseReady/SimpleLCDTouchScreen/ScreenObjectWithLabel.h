@@ -13,11 +13,11 @@ class ScreenObjectWithLabel: virtual public ScreenObjectWithXtraCoords
 public:
     ScreenObjectWithLabel(int x, int y, Color mainColor, Label* label);
     ScreenObjectWithLabel(int x, int y, Color mainColor);
-    ScreenObjectWithLabel(int x, int y, Color mainColor, Label* label, bool disableAutoSize);
+    ScreenObjectWithLabel(int x, int y, Color mainColor, Label* label, bool autoSizeEnabled);
     ScreenObjectWithLabel();
     bool isAValidLabel();
     bool isAutoSizeEnabled();
-    void enableAutoSize(bool disableAutoSize);
+    void enableAutoSize(bool autoSizeEnabled);
     Label* getLabel();
     void setLabel(Label* label);
     void updateLabelLocation(uint8_t margin);
