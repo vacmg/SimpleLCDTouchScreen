@@ -9,7 +9,7 @@
 #include "SimpleLCDTouchScreen.h"
 
 #define MEGA true
-#define ROTATION 1
+#define ROTATION 3
 
 #ifdef __arm__
 // should use uinstd.h to define sbrk but Due causes a conflict
@@ -52,7 +52,7 @@ TouchScreenObject ts(9,A2,A3,8,300,320,480,(ROTATION+1)%4,177,900,157,958); // f
 //Picture picture(14,44,"schArd.bmp");
 Label label3(0,0,"8",50,Color(0));
 Rectangle rectangle3(0,0,1,1,Color(0),Color(240,240,240));
-TextBox textBox(20,20,460,300,"test.txt",10,&rectangle3,&label3,0,39);
+TextBox textBox(20,20,460,300,"test.txt",10,&rectangle3,&label3);
 //Rectangle rectangle4(20,20,460,300,Color(0),Color(240,240,240),&label3,true);
 
 void setup() {
@@ -121,7 +121,7 @@ void setup() {
 
     //textBox.printAll(&Serial);
     //Serial.println("\n");
-    textBox.print(&Serial);
+    textBox.printAsDrawn(&Serial);
     Serial.println("\n");
     my_lcd.draw(&textBox);
     //textBox.test();
