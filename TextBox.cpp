@@ -387,10 +387,12 @@ bool TextBox::print(HardwareSerial* serial)
 
 bool TextBox::printAsDrawn(HardwareSerial* serial)
 {
-    if(!init())
-        return false;
-    uint8_t font = getFontSize();
-    if(!canBeDrawn())
+    return printAsDrawn(serial,getFontSize());
+}
+
+bool TextBox::printAsDrawn(HardwareSerial* serial, uint8_t font)
+{
+    if(!init() || !canBeDrawn() || font<1)
         return false;
 
     uint32_t xpx = getx1()-getx();

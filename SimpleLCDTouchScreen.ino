@@ -121,9 +121,10 @@ void setup() {
 
     //textBox.printAll(&Serial);
     //Serial.println("\n");
-    textBox.printAsDrawn(&Serial);
+    uint8_t font = 5;
+    textBox.printAsDrawn(&Serial,font);
     Serial.println("\n");
-    my_lcd.draw(&textBox);
+    my_lcd.draw(&textBox,font);
     //textBox.test();
 
     //my_lcd.draw(&rectangle4);
