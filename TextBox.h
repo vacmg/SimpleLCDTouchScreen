@@ -53,10 +53,12 @@ public:
     void setCoords(int x, int y);
     void setCoords1(int x1, int y1);
     bool canBeDrawn();
+    uint8_t getDisplayedRows();
 
 private:
     bool checkIfFileExists();
     uint8_t calculateFontSize();
+    uint8_t displayedRows;
     const char* textPath;
     uint32_t beginOffset;
     uint32_t endOffset;

@@ -14,6 +14,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacin
     this->validFile = false;
     this->marginX = marginX;
     this->marginY = marginY;
+    this->displayedRows = 0;
 }
 
 TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacing, Rectangle* frame, Label *label, uint32_t beginOffset, uint32_t endOffset): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color()), ScreenObjectWithRectangle(x,y,Color(),frame), ScreenObjectWithLabel(x,y,Color(),label,true)
@@ -26,6 +27,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacin
     this->validFile = false;
     this->marginX = 10;
     this->marginY = 10;
+    this->displayedRows = 0;
 }
 
 TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, Rectangle* frame, Label *label, uint32_t beginOffset, uint32_t endOffset): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color()), ScreenObjectWithRectangle(x,y,Color(),frame), ScreenObjectWithLabel(x,y,Color(),label,true)
@@ -38,6 +40,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, Rectangle* 
     this->validFile = false;
     this->marginX = 10;
     this->marginY = 10;
+    this->displayedRows = 0;
 }
 
 TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacing, Rectangle* frame, Label *label): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color()), ScreenObjectWithRectangle(x,y,Color(),frame), ScreenObjectWithLabel(x,y,Color(),label,true)
@@ -50,6 +53,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacin
     this->fontSize = 0;
     this->marginX = 10;
     this->marginY = 10;
+    this->displayedRows = 0;
 }
 
 TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacing, uint16_t marginX, uint16_t marginY, Rectangle* frame, Label *label): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color()), ScreenObjectWithRectangle(x,y,Color(),frame), ScreenObjectWithLabel(x,y,Color(),label,true)
@@ -62,6 +66,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacin
     this->fontSize = 0;
     this->marginX = marginX;
     this->marginY = marginY;
+    this->displayedRows = 0;
 }
 
 TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, Rectangle* frame, Label *label): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color()), ScreenObjectWithRectangle(x,y,Color(),frame), ScreenObjectWithLabel(x,y,Color(),label,true)
@@ -74,6 +79,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, Rectangle* 
     this->fontSize = 0;
     this->marginX = 10;
     this->marginY = 10;
+    this->displayedRows = 0;
 }
 
 TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacing, uint16_t marginX, uint16_t marginY, Label *label, uint32_t beginOffset, uint32_t endOffset): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color()), ScreenObjectWithRectangle(x,y,Color(),nullptr), ScreenObjectWithLabel(x,y,Color(),label,true)
@@ -86,6 +92,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacin
     this->validFile = false;
     this->marginX = marginX;
     this->marginY = marginY;
+    this->displayedRows = 0;
 }
 
 TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacing, Label *label, uint32_t beginOffset, uint32_t endOffset): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color()), ScreenObjectWithRectangle(x,y,Color(),nullptr), ScreenObjectWithLabel(x,y,Color(),label,true)
@@ -98,6 +105,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacin
     this->validFile = false;
     this->marginX = 10;
     this->marginY = 10;
+    this->displayedRows = 0;
 }
 
 TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, Label *label, uint32_t beginOffset, uint32_t endOffset): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color()), ScreenObjectWithRectangle(x,y,Color(),nullptr), ScreenObjectWithLabel(x,y,Color(),label,true)
@@ -110,6 +118,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, Label *labe
     this->validFile = false;
     this->marginX = 10;
     this->marginY = 10;
+    this->displayedRows = 0;
 }
 
 TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacing, Label *label): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color()), ScreenObjectWithRectangle(x,y,Color(),nullptr), ScreenObjectWithLabel(x,y,Color(),label,true)
@@ -122,6 +131,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacin
     this->fontSize = 0;
     this->marginX = 10;
     this->marginY = 10;
+    this->displayedRows = 0;
 }
 
 TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacing, uint16_t marginX, uint16_t marginY, Label *label): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color()), ScreenObjectWithRectangle(x,y,Color(),nullptr), ScreenObjectWithLabel(x,y,Color(),label,true)
@@ -134,6 +144,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, byte spacin
     this->fontSize = 0;
     this->marginX = marginX;
     this->marginY = marginY;
+    this->displayedRows = 0;
 }
 
 TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, Label *label): ScreenObject(x,y,Color()), ScreenObjectWithXtraCoords(x,y,x1,y1,Color()), ScreenObjectWithRectangle(x,y,Color(),nullptr), ScreenObjectWithLabel(x,y,Color(),label,true)
@@ -146,6 +157,7 @@ TextBox::TextBox(int x, int y, int x1, int y1, const char* textPath, Label *labe
     this->fontSize = 0;
     this->marginX = 10;
     this->marginY = 10;
+    this->displayedRows = 0;
 }
 
 /*
@@ -237,6 +249,7 @@ uint8_t TextBox::calculateFontSize()
                 }
                 row++;
             }
+            displayedRows = row;
 
             if(nxWord == nullptr) // If nextWord is nullptr, it must have reached the end of the paragraph
             {
@@ -302,6 +315,13 @@ uint8_t TextBox::getFontSize()
     if(!init())
         return 0;
     return fontSize==0?calculateFontSize():fontSize;
+}
+
+uint8_t TextBox::getDisplayedRows()
+{
+    if(fontSize==0 && calculateFontSize()>0)
+        return displayedRows;
+    else return 0;
 }
 
 uint32_t TextBox::getBeginOffset()
