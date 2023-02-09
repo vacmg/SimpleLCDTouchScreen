@@ -85,17 +85,11 @@ TSPoint TouchScreenObject::getPoint()
     pinMode(xm, OUTPUT);
     pinMode(yp, OUTPUT);
 
-    /*if(point.z>50)
-        Serial.print("raw:\tx:"+String(point.x)+";\ty:"+point.y+'\t');//*/
-
     point.x = map(point.x, CAL_LEFT, CAL_RIGHT, 0, DISPLAY_HEIGHT); // long map(long x, long in_min, long in_max, long out_min, long out_max)
     point.y = map(point.y, CAL_TOP, CAL_BOT, 0, DISPLAY_WIDTH);
 
     if(xAxisInverted)
         point.x = DISPLAY_HEIGHT-point.x;
-
-    /*if(point.z>50) //
-        Serial.print("noRotation:\tx:"+String(point.x)+";\ty:"+point.y+'\t');//*/
 
     if (rotation == 1)
     {
@@ -135,4 +129,12 @@ void TouchScreenObject::invertXAxis(bool inverted)
 bool TouchScreenObject::isXAxisInverted()
 {
     return xAxisInverted;
+}
+
+void TouchScreenObject::calibrateScreen(int CAL_LEFT, int CAL_RIGHT, int CAL_TOP, int CAL_BOT)
+{
+    this->CAL_LEFT = CAL_LEFT;
+    this->CAL_RIGHT = CAL_RIGHT;
+    this->CAL_TOP = CAL_TOP;
+    this->CAL_BOT = CAL_BOT;
 }

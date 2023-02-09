@@ -70,7 +70,8 @@ void setup() {
   #else
   my_lcd.set_sd_cs(10);
   #endif
-  my_lcd.Init_LCD();
+
+    my_lcd.Init_LCD();
     my_lcd.Set_Rotation(ROTATION);
     //ts.setRotation(ROTATION);
     my_lcd.Fill_Screen(0);
