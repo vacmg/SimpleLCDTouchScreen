@@ -108,9 +108,9 @@ bool SimpleLCDTouchScreen::draw(TextBox* textBox)
     return textBox != nullptr && draw(textBox, textBox->getFontSize());
 }
 
-bool SimpleLCDTouchScreen::draw(TextBox* textBox, uint8_t font)
+bool SimpleLCDTouchScreen::draw(TextBox* textBox, uint8_t fontSize)
 {
-    if(textBox == nullptr || font<1)
+    if(textBox == nullptr || fontSize<1)
         return false;
     if(!textBox->init() || !textBox->canBeDrawn())
     {
@@ -131,9 +131,9 @@ bool SimpleLCDTouchScreen::draw(TextBox* textBox, uint8_t font)
 
     if(textBox->isAValidLabel())
     {
-        textBox->getLabel()->setFontSize(font);
-        uint16_t maxNumOfCharPerRow = textBox->charactersPerRow(xpx,font);
-        uint16_t maxNumOfRows = textBox->maxAmountOfRows(ypx, font);
+        textBox->getLabel()->setFontSize(fontSize);
+        uint16_t maxNumOfCharPerRow = textBox->charactersPerRow(xpx, fontSize);
+        uint16_t maxNumOfRows = textBox->maxAmountOfRows(ypx, fontSize);
         uint16_t row = 0;
         uint16_t pos = textBox->getBeginOffset();
         uint32_t wordSize;
@@ -146,7 +146,7 @@ bool SimpleLCDTouchScreen::draw(TextBox* textBox, uint8_t font)
             bool maxCharPerLineExceeded = false;
             char* line = (char*) calloc(maxNumOfCharPerRow, sizeof(char));
             Label* label = textBox->getLabel();
-            label->setCoords((int)(textBox->getx()+textBox->getMarginX()),(int)(textBox->gety()+textBox->getMarginY()+((7*font)+textBox->getSpacing())*row)); // set the coords where to draw the string
+            label->setCoords((int)(textBox->getx()+textBox->getMarginX()),(int)(textBox->gety()+textBox->getMarginY()+((7*fontSize)+textBox->getSpacing())*row)); // set the coords where to draw the string
             while (nxWord!= nullptr && !maxCharPerLineExceeded) // For each word until the line is full or a \n is read
             {
                 if(maxNumOfCharPerRow-charsReadInARow<(wordSize+1)) // If there is no enough free space
@@ -209,7 +209,7 @@ void SimpleLCDTouchScreen::set_sd_cs(uint8_t sd_cs)
     this->sd_cs = sd_cs;
 }
 
-bool SimpleLCDTouchScreen::drawBmpPicture(int x, int y, File file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes)
+bool SimpleLCDTouchScreen::drawBmpPicture(int x, int y, File& file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes)
 {
     file.seek(offset);
     for(long row = (long)height-1; row>=0;row--)
@@ -230,10 +230,10 @@ bool SimpleLCDTouchScreen::drawBmpPicture(int x, int y, File file, uint32_t offs
     return true;
 }
 
-bool SimpleLCDTouchScreen::drawBmpPictureBuff(int x, int y, File file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes)
+bool SimpleLCDTouchScreen::drawBmpPictureBuff(int x, int y, File& file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes)
 {
     file.seek(offset);
-    uint8_t* rowBuff = (uint8_t*) malloc(width*3*sizeof(uint8_t));
+    uint8_t* rowBuff = (uint8_t*) malloc(width*BMP_BUFF_ROWS*sizeof(uint8_t));
     if (rowBuff == nullptr)
     {
         return drawBmpPicture(x,y,file,offset,height,width,ignoreBytes); // use fallback method (no buffer/slower)
