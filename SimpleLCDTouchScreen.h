@@ -21,6 +21,9 @@
 /// The amount of rows used in the buffer that speeds up image drawing in drawBmpPictureBuff
 #define BMP_BUFF_ROWS 3
 
+/// The amount of steps the calibration has
+#define CALIBRATION_MAX_STEPS 9 // TODO ver cuantos son
+
 /**
  * This class represents the Screen module connected to the MCU.
  * Once created an object of this class, configured the SD cs pin (if cs pin is not set, it defaults to pin 10) and started the module (Init_LCD())
@@ -37,8 +40,9 @@ public:
      * @param wr wr screen pin
      * @param rd rd screen pin
      * @param reset reset screen pin
+     * @param ts touch module object
      */
-    SimpleLCDTouchScreen(uint16_t model, uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t reset);
+    SimpleLCDTouchScreen(uint16_t model, uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t reset, TouchScreenObject* ts);
 
     /**
      * This is the constructor of the Screen module
@@ -48,14 +52,21 @@ public:
      * @param wr wr screen pin
      * @param rd rd screen pin
      * @param reset reset screen pin
+     * @param ts touch module object
      */
-    SimpleLCDTouchScreen(int16_t wid, int16_t heg, uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t reset);
+    SimpleLCDTouchScreen(int16_t wid, int16_t heg, uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t reset, TouchScreenObject* ts);
 
     /**
      * This function start the connection with the screen module
      * It needs to be called before drawing anything in the screen
      */
     void Init_LCD();
+
+    /**
+     * This function set the rotation of the touchscreen
+     * @param rotation the new rotation of the screen
+     */
+    void Set_Rotation(uint8_t rotation);
 
     /**
      * TouchScreen module uses a builtIn SD card reader, this function allows to change in whichd pin is the SD card reader connected
@@ -106,12 +117,19 @@ public:
     bool draw(TextBox* textBox);
 
     /**
-     * * This function writes a Textbox object overriding the automatic font (which has its parameters builtin)
+     * This function writes a Textbox object overriding the automatic font (which has its parameters builtin)
      * @param textBox The label object which is going to be drawn
      * @param fontSize The font size used to draw the textbox
      * @return true if it was successfully drawn or false otherwise
      */
     bool draw(TextBox* textBox, uint8_t fontSize);
+
+    /**
+     * This function runs the touchscreen calibration wizard.
+     * This function is non blocking, meaning that to successfully calibrate the screen, it must be called until it returns a number <= 0
+     * @return The number of steps left until calibration is done, 0 if the calibration successfully ended and -1 if the calibration was cancelled
+     */
+    int8_t calibrateScreen();
 
 
 private:
@@ -141,11 +159,16 @@ private:
      */
     bool drawBmpPictureBuff(int x, int y, File& file, uint32_t offset, uint32_t height, uint32_t width, uint32_t ignoreBytes);
 
+    int8_t calibrationStep;
+
     /// BuiltIn SD module cs pin
     uint8_t sd_cs;
 
     /// SD Ready switch used to check if a SD is present in the reader
     bool isSDReady;
+
+    /// Touch object
+    TouchScreenObject* ts;
 };
 
 #endif //SIMPLE_LCDTOUCH_SCREEN_H_

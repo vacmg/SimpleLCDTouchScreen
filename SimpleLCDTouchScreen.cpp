@@ -1,16 +1,20 @@
 #include "SimpleLCDTouchScreen.h"
 #include "ScreenObject.h"
 
-SimpleLCDTouchScreen::SimpleLCDTouchScreen(int16_t wid, int16_t heg, uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t reset) : LCDWIKI_KBV(wid, heg, cs, cd, wr, rd, reset)
+SimpleLCDTouchScreen::SimpleLCDTouchScreen(int16_t wid, int16_t heg, uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t reset, TouchScreenObject* ts) : LCDWIKI_KBV(wid, heg, cs, cd, wr, rd, reset)
 {
-    isSDReady = false;
-    sd_cs = 10;
+    this->ts = ts;
+    this->isSDReady = false;
+    this->sd_cs = 10;
+    this->calibrationStep = CALIBRATION_MAX_STEPS;
 }
 
-SimpleLCDTouchScreen::SimpleLCDTouchScreen(uint16_t model, uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd,uint8_t reset) : LCDWIKI_KBV(model, cs, cd, wr, rd, reset)
+SimpleLCDTouchScreen::SimpleLCDTouchScreen(uint16_t model, uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd,uint8_t reset, TouchScreenObject* ts) : LCDWIKI_KBV(model, cs, cd, wr, rd, reset)
 {
-    isSDReady = false;
-    sd_cs = 10;
+    this->ts = ts;
+    this->isSDReady = false;
+    this->sd_cs = 10;
+    this->calibrationStep = CALIBRATION_MAX_STEPS;
 }
 
 bool SimpleLCDTouchScreen::draw(Line* line)
@@ -252,4 +256,23 @@ bool SimpleLCDTouchScreen::drawBmpPictureBuff(int x, int y, File& file, uint32_t
     free(rowBuff);
     file.close();
     return true;
+}
+
+void SimpleLCDTouchScreen::Set_Rotation(uint8_t rotation)
+{
+    ts->setRotation(rotation);
+    LCDWIKI_KBV::Set_Rotation(rotation);
+}
+
+int8_t SimpleLCDTouchScreen::calibrateScreen()
+{
+    switch (calibrationStep)
+    {
+        case CALIBRATION_MAX_STEPS:
+        {
+            
+        }
+            break;
+    }
+    return calibrationStep;
 }

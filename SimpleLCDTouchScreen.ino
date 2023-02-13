@@ -30,10 +30,10 @@ int freeMemory() {
 }
 
 //circle, triangle, bitmap?
-
-SimpleLCDTouchScreen my_lcd(ST7796S, A3, A2, A1, A0, A4); //model,cs,cd,wr,rd,reset
-//TouchScreenObject ts(8,A3,A2,9,300,320,480,3,924,111,58,935); // rx is the resistance between X+ and X- Use any multimeter to read it or leave it blanc
 TouchScreenObject ts(9,A2,A3,8,300,320,480,(ROTATION+1)%4,177,900,157,958); // for 3.5inch
+SimpleLCDTouchScreen my_lcd(ST7796S, A3, A2, A1, A0, A4,&ts); //model,cs,cd,wr,rd,reset
+//TouchScreenObject ts(8,A3,A2,9,300,320,480,3,924,111,58,935); // rx is the resistance between X+ and X- Use any multimeter to read it or leave it blanc
+
 //TouchScreenObject ts(8,A3,A2,9,300,480,320,0,0,0,1023,1023); // rx is the resistance between X+ and X- Use any multimeter to read it or leave it blanc
 
 //Line line(93,68,93,68+2*8-2, Color(0,255,0));
