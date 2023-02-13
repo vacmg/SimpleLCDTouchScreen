@@ -85,7 +85,7 @@ TSPoint TouchScreenObject::getPoint()
     pinMode(xm, OUTPUT);
     pinMode(yp, OUTPUT);
 
-    point.x = map(point.x, CAL_LEFT, CAL_RIGHT, 0, DISPLAY_HEIGHT); // long map(long x, long in_min, long in_max, long out_min, long out_max)
+    point.x = map(point.x, CAL_LEFT, CAL_RIGHT, 0, DISPLAY_HEIGHT);
     point.y = map(point.y, CAL_TOP, CAL_BOT, 0, DISPLAY_WIDTH);
 
     if(xAxisInverted)
@@ -131,7 +131,7 @@ bool TouchScreenObject::isXAxisInverted()
     return xAxisInverted;
 }
 
-void TouchScreenObject::calibrateScreen(int CAL_LEFT, int CAL_RIGHT, int CAL_TOP, int CAL_BOT)
+void TouchScreenObject::changeCalibrationValues(int CAL_LEFT, int CAL_RIGHT, int CAL_TOP, int CAL_BOT)
 {
     this->CAL_LEFT = CAL_LEFT;
     this->CAL_RIGHT = CAL_RIGHT;
